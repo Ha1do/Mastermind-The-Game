@@ -1,4 +1,4 @@
-package sk.tuke.kpi.kp.mastermind;
+package main.java.sk.tuke.kpi.kp.mastermind;
 
 public record UI() {
     public void printRules()
