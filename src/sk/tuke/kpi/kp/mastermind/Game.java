@@ -17,23 +17,51 @@ public class Game
     public void checkGuess(int[] guess)
     {
         attempts++;
-        int[] feedback = Feedback.countMatches(secretCode, guess);
+        int[] numsCount = new int[10];
+        char[] answer = {'N', 'N', 'N', 'N'};
+        for (int j : secretCode) numsCount[j]++;
 
-        if (Feedback.isFullyGuessed(feedback))
+        for (int i = 0; i < CODE_LENGTH; i++)
+        {
+            if (guess[i] == secretCode[i])
+            {
+                answer[i] = 'G';
+                numsCount[guess[i]]--;
+            }
+        }
+
+        for (int i = 0; i < CODE_LENGTH; i++)
+        {
+            if (answer[i] != 'G')
+            {
+                for (int j = 0; j < CODE_LENGTH; j++)
+                {
+                    if (guess[i] == secretCode[j] && i != j && numsCount[guess[i]] > 0)
+                    {
+                        answer[i] = 'Y';
+                        numsCount[guess[i]]--;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (new String(answer).equals("GGGG"))
         {
             guessed = true;
             return;
         }
 
         System.out.print("Your guess is   : ");
-        for (int match : feedback)
+        for (char match : answer)
         {
-            if (match == 5)
-                System.out.print("\u001B[32mG\u001B[0m");
-            else if (match > 0)
-                System.out.print("\u001B[33mY\u001B[0m");
-            else
-                System.out.print("\u001B[31mR\u001B[0m");
+            switch (match)
+            {
+                case 'G' -> System.out.print("\u001B[32mG\u001B[0m");
+                case 'Y' -> System.out.print("\u001B[33mY\u001B[0m");
+                default -> System.out.print("\u001B[31mR\u001B[0m");
+
+            }
         }
         System.out.println("\n");
     }

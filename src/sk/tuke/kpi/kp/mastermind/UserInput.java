@@ -7,7 +7,8 @@ public class UserInput {
 
     public static int[] getUserGuess(Scanner scanner)
     {
-        while (true) {
+        while (true)
+        {
             String input = scanner.nextLine();
             if (input.matches("[0-9]{4}"))
             {
