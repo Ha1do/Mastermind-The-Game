@@ -7,7 +7,8 @@ public class User
 
     public User ()
     {
-
+        this.name = "";
+        this.score = 0;
     }
 
     public void setName (String name) { this.name = name; }
