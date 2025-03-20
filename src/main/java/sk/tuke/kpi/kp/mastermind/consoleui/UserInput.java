@@ -2,7 +2,8 @@ package main.java.sk.tuke.kpi.kp.mastermind.consoleui;
 
 import java.util.Scanner;
 
-public class UserInput {
+public class UserInput
+{
     private static final int CODE_LENGTH = 4;
 
     public static int[] getUserGuess(Scanner scanner)

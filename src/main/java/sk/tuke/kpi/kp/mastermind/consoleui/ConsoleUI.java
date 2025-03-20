@@ -33,6 +33,19 @@ public class ConsoleUI
         user.setName(scanner.nextLine());
     }
 
+    public int getNumber()
+    {
+        System.out.print("Enter the number of digits in the secret code: ");
+        String input = scanner.nextLine();
+        if (input.matches("[1-9]|[1-4][0-9]|50"))
+            return Integer.parseInt(input);
+        else
+        {
+            System.out.print("Wrong input. Please enter a number from 1 to 50: \n");
+            return getNumber();
+        }
+    }
+
 
 
 
