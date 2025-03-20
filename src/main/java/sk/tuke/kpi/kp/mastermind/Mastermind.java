@@ -4,7 +4,6 @@ import main.java.sk.tuke.kpi.kp.mastermind.consoleui.ConsoleUI;
 import main.java.sk.tuke.kpi.kp.mastermind.core.CodeGenerator;
 import main.java.sk.tuke.kpi.kp.mastermind.core.Game;
 import main.java.sk.tuke.kpi.kp.mastermind.core.User;
-//import main.java.sk.tuke.kpi.kp.mastermind.consoleui.UserInput;
 
 public class Mastermind
 {
@@ -16,19 +15,9 @@ public class Mastermind
         ui.AskForName(user);
 
         CodeGenerator codeGenerator = new CodeGenerator(ui.getNumber());
-        Game game = new Game(codeGenerator.generateSecretCode(), user);
-/// /////////
-
-
-        while (!game.isGuessed())
-        {
-            System.out.print("Enter your guess: ");
-//            int[] guess = UserInput.getUserGuess(scanner);
-//            game.checkGuess(guess);
-        }
+        Game game = new Game(codeGenerator.generateSecretCode(), user, ui);
+        game.play();
 
         ui.win(game.getAttempts());
-
-//        System.out.println("The " + user.getName() + " score is: " + user.getScore());
     }
 }

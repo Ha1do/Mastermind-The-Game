@@ -46,10 +46,41 @@ public class ConsoleUI
         }
     }
 
+    public int[] attempGuess (int count)
+    {
+        System.out.print("Enter your guess: ");
+        String input = scanner.nextLine();
+        if (input.matches("\\d{" + count + "}"))
+        {
+            int[] guess = new int[count];
+            for (int i = 0; i < count; i++)
+            {
+                guess[i] = Character.getNumericValue(input.charAt(i));
+            }
+            return guess;
+        }
+        else
+        {
+            System.out.print("Wrong input. Please enter a number with " + count + " digits: \n");
+            return attempGuess(count);
+        }
+    }
 
+    public void feedBack (char[] answer)
+    {
+        System.out.print("Your guess is   : ");
+        for (char match : answer)
+        {
+            switch (match)
+            {
+                case 'G' -> System.out.print("\u001B[32mG\u001B[0m");
+                case 'Y' -> System.out.print("\u001B[33mY\u001B[0m");
+                default -> System.out.print("\u001B[31mR\u001B[0m");
 
-
-
+            }
+        }
+        System.out.println("\n");
+    }
 
     public void win(int attempts) {
         System.out.println("Congratulations! You guessed the secret code in " + attempts + " attempts.");

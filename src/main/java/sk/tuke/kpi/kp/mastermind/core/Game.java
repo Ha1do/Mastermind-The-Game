@@ -1,26 +1,44 @@
 package main.java.sk.tuke.kpi.kp.mastermind.core;
 
+import main.java.sk.tuke.kpi.kp.mastermind.consoleui.ConsoleUI;
+
+import java.util.Arrays;
+
 public class Game
 {
-    private int code_length;
+    private final int code_length;
     private final int[] secretCode;
     private boolean guessed;
     private int attempts;
-    private User user;
+    private final User user;
+    private final ConsoleUI ui;
 
-    public Game(int[] secretCode, User user)
+    public Game(int[] secretCode, User user, ConsoleUI console)
     {
         this.secretCode = secretCode;
         this.guessed = false;
         this.attempts = 0;
         this.user = user;
+        this.code_length = secretCode.length;
+        this.ui = console;
     }
+
+    public void play ()
+    {
+        while (!guessed)
+        {
+            int[] guess = ui.attempGuess(code_length);
+            checkGuess(guess);
+        }
+    }
+
 
     public void checkGuess(int[] guess)
     {
         attempts++;
         int[] numsCount = new int[10];
-        char[] answer = {'N', 'N', 'N', 'N'};
+        char[] answer = new char[code_length];
+        Arrays.fill(answer, 'N');
         for (int j : secretCode) numsCount[j]++;
 
         for (int i = 0; i < code_length; i++)
@@ -48,25 +66,14 @@ public class Game
             }
         }
 
-        if (new String(answer).equals("GGGG"))
+        if (new String(answer).equals("G".repeat(code_length)))
         {
             guessed = true;
             user.setScore(attempts);
             return;
         }
 
-        System.out.print("Your guess is   : ");
-        for (char match : answer)
-        {
-            switch (match)
-            {
-                case 'G' -> System.out.print("\u001B[32mG\u001B[0m");
-                case 'Y' -> System.out.print("\u001B[33mY\u001B[0m");
-                default -> System.out.print("\u001B[31mR\u001B[0m");
-
-            }
-        }
-        System.out.println("\n");
+        ui.feedBack(answer);
     }
 
     public boolean isGuessed() { return guessed; }
