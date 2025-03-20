@@ -1,6 +1,6 @@
 package test.java.sk.tuke.kpi.kp.mastermind;
 
-import main.java.sk.tuke.kpi.kp.mastermind.UserInput;
+import main.java.sk.tuke.kpi.kp.mastermind.consoleui.UserInput;
 import org.junit.jupiter.api.Test;
 import java.io.ByteArrayInputStream;
 import java.util.Scanner;

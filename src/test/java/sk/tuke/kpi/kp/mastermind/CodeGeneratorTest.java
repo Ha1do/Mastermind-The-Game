@@ -1,7 +1,6 @@
 package test.java.sk.tuke.kpi.kp.mastermind;
 
-import org.junit.jupiter.api.Test;
-import main.java.sk.tuke.kpi.kp.mastermind.CodeGenerator;
+import main.java.sk.tuke.kpi.kp.mastermind.core.CodeGenerator;
 
 import static org.junit.jupiter.api.Assertions.*;
 

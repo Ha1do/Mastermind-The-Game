@@ -1,19 +1,31 @@
 package main.java.sk.tuke.kpi.kp.mastermind;
 
-import java.util.Scanner;
+import main.java.sk.tuke.kpi.kp.mastermind.consoleui.ConsoleUI;
+import main.java.sk.tuke.kpi.kp.mastermind.core.CodeGenerator;
+import main.java.sk.tuke.kpi.kp.mastermind.core.Game;
+import main.java.sk.tuke.kpi.kp.mastermind.core.User;
+import main.java.sk.tuke.kpi.kp.mastermind.consoleui.UserInput;
 
 public class Mastermind
 {
-    private static final int CODE_LENGTH = 4;
-
     public static void main(String[] args)
     {
-        UI ui = new UI();
-        Scanner scanner = new Scanner(System.in);
-        CodeGenerator codeGenerator = new CodeGenerator();
-        Game game = new Game(codeGenerator.generateSecretCode());
+//        Scanner scanner = new Scanner(System.in);
+        ConsoleUI ui = new ConsoleUI();
 
-        ui.printRules();
+
+        ui.Welcome();
+        User user = new User ();
+        ui.AskForName(user);
+
+
+
+
+
+        CodeGenerator codeGenerator = new CodeGenerator();
+        Game game = new Game(codeGenerator.generateSecretCode(), user);
+
+
 
         while (!game.isGuessed())
         {
@@ -24,5 +36,8 @@ public class Mastermind
 
         ui.win(game.getAttempts());
         scanner.close();
+
+        System.out.println("The " + user.getName() + " score is: " + user.getScore());
+
     }
 }

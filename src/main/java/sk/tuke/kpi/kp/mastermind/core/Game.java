@@ -1,17 +1,19 @@
-package main.java.sk.tuke.kpi.kp.mastermind;
+package main.java.sk.tuke.kpi.kp.mastermind.core;
 
 public class Game
 {
-    private static final int CODE_LENGTH = 4;
+    private int code_length;
     private final int[] secretCode;
     private boolean guessed;
     private int attempts;
+    private User user;
 
-    public Game(int[] secretCode)
+    public Game(int[] secretCode, User user)
     {
         this.secretCode = secretCode;
         this.guessed = false;
         this.attempts = 0;
+        this.user = user;
     }
 
     public void checkGuess(int[] guess)
@@ -21,7 +23,7 @@ public class Game
         char[] answer = {'N', 'N', 'N', 'N'};
         for (int j : secretCode) numsCount[j]++;
 
-        for (int i = 0; i < CODE_LENGTH; i++)
+        for (int i = 0; i < code_length; i++)
         {
             if (guess[i] == secretCode[i])
             {
@@ -30,11 +32,11 @@ public class Game
             }
         }
 
-        for (int i = 0; i < CODE_LENGTH; i++)
+        for (int i = 0; i < code_length; i++)
         {
             if (answer[i] != 'G')
             {
-                for (int j = 0; j < CODE_LENGTH; j++)
+                for (int j = 0; j < code_length; j++)
                 {
                     if (guess[i] == secretCode[j] && i != j && numsCount[guess[i]] > 0)
                     {
@@ -49,6 +51,7 @@ public class Game
         if (new String(answer).equals("GGGG"))
         {
             guessed = true;
+            user.setScore(attempts);
             return;
         }
 
