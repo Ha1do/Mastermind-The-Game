@@ -4,15 +4,17 @@ import java.util.Date;
 
 public class Comment
 {
+    private String game;
     private String comment;
     private String player;
     private Date playedOn;
 
-    public Comment(String comment, String player, Date playedOn)
+    public Comment(String comment, String player, Date playedOn, String game)
     {
         this.comment = comment;
         this.player = player;
         this.playedOn = playedOn;
+        this.game = game;
     }
 
     public String getComment() { return comment; }
@@ -23,4 +25,7 @@ public class Comment
 
     public Date getPlayedOn() { return playedOn; }
     public void setPlayedOn(Date playedOn) { this.playedOn = playedOn; }
+
+    public String getGame() { return game; }
+    public void setGame(String game) { this.game = game; }
 }

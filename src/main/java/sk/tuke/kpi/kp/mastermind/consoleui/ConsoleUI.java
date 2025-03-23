@@ -1,12 +1,20 @@
 package main.java.sk.tuke.kpi.kp.mastermind.consoleui;
 
 import main.java.sk.tuke.kpi.kp.mastermind.core.User;
+import sk.tuke.gamestudio.entity.Comment;
+import sk.tuke.gamestudio.entity.Rating;
+import sk.tuke.gamestudio.entity.Score;
+import sk.tuke.gamestudio.service.*;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleUI
 {
     Scanner scanner = new Scanner(System.in);
+    Comment comment;
+    Rating rating;
 
     public void Welcome()
     {
@@ -31,6 +39,55 @@ public class ConsoleUI
     {
         System.out.print("Please enter your name here: ");
         user.setName(scanner.nextLine());
+    }
+
+    public void seeComsRatsScores(ScoreServiceJDBC score, CommentServiceJDBC com, RatingServiceJDBC reting) {
+        System.out.println("Before we start, you can check the top scores, ratings and comments of the game.");
+        System.out.println("To do that, type 'yes'. If not, type anything else.");
+        String input = scanner.nextLine();
+        if (input.equals("yes")) {
+            System.out.println("If you want to see the top 4 players with the highest score, enter 'topscores'.");
+            System.out.println("If you want to see the comments, enter 'comments'.");
+            System.out.println("If you want to see the AVG game rating, enter 'avg'.");
+            System.out.println("If you want to start the game, enter 'start'.");
+
+            String pick = scanner.nextLine();
+            while (!(pick.equals("start"))) {
+                switch (pick) {
+                    case "topscores":
+                        System.out.println("Top scores: ");
+                        List<Score> scores = score.getTopScores("Mastermind");
+                        if (scores.isEmpty()) {
+                            System.out.println("No scores available.");
+                        } else {
+                            scores.forEach(System.out::println);
+                        }
+                        break;
+                    case "comments":
+                        System.out.println("Comments: ");
+                        List<Comment> comments = com.getComments("Mastermind");
+                        if (comments.isEmpty()) {
+                            System.out.println("No comments available.");
+                        } else {
+                            comments.forEach(System.out::println);
+                        }
+                        break;
+                    case "avg":
+                        System.out.println("Average rating: ");
+                        try {
+                            int avgRating = reting.getAverageRating("Mastermind");
+                            System.out.println(avgRating);
+                        } catch (RatingException e) {
+                            System.out.println("No ratings available.");
+                        }
+                        break;
+                    default:
+                        System.out.println("Wrong input. Please enter one of the options above: ");
+                        break;
+                }
+                pick = scanner.nextLine();
+            }
+        }
     }
 
     public int getNumber()
@@ -84,5 +141,34 @@ public class ConsoleUI
 
     public void win(int attempts) {
         System.out.println("Congratulations! You guessed the secret code in " + attempts + " attempts.");
+    }
+
+    public void askForCommentRating(String name, Date date,
+                                    CommentServiceJDBC commentService, RatingServiceJDBC ratingService) {
+        System.out.println("Would you like to leave a comment and rating? (yes/no)");
+        String input = scanner.nextLine();
+        if (input.equals("yes")) {
+            System.out.println("Enter your comment: ");
+            String com = scanner.nextLine();
+
+            System.out.println("Enter your rating from 1 to 10: ");
+            String inputRat = scanner.nextLine();
+            while (!inputRat.matches("[1-9]|10")) {
+                System.out.println("Wrong input. Please enter a number from 1 to 10: ");
+                inputRat = scanner.nextLine();
+            }
+            int rat = Integer.parseInt(inputRat);
+
+            comment = new Comment(com, name, date, "Mastermind");
+            rating = new Rating(name, rat, date, "Mastermind");
+
+            commentService.addComment(comment);
+            ratingService.setRating(rating);
+        }
+    }
+
+    public void End() {
+        System.out.println("Goodbye!");
+        scanner.close();
     }
 }
