@@ -41,4 +41,20 @@ public class CodeGeneratorTest {
         int[] code2 = codeGenerator.generateSecretCode();
         assertNotEquals(java.util.Arrays.toString(code1), java.util.Arrays.toString(code2), "Two generated codes should not be the same.");
     }
+
+    @Test
+    public void testGenerateSecretCodeMinLength() {
+        int codeLength = 1;
+        CodeGenerator codeGenerator = new CodeGenerator(codeLength);
+        int[] code = codeGenerator.generateSecretCode();
+        assertEquals(codeLength, code.length, "The generated code length should match the specified minimum code length.");
+    }
+
+    @Test
+    public void testGenerateSecretCodeMaxLength() {
+        int codeLength = 50;
+        CodeGenerator codeGenerator = new CodeGenerator(codeLength);
+        int[] code = codeGenerator.generateSecretCode();
+        assertEquals(codeLength, code.length, "The generated code length should match the specified maximum code length.");
+    }
 }
