@@ -6,6 +6,7 @@ import sk.tuke.gamestudio.entity.Rating;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.service.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -22,6 +23,8 @@ public class ConsoleUI
         System.out.println("The secret code usually contains \u001B[34m4\u001B[0m digits.");
         System.out.println("But you can choose any number between \u001B[33m1\u001B[0m and \u001B[31m50\u001B[0m." +
                 "(The recommended value is from \u001B[32m4\u001B[0m to \u001B[32m10\u001B[0m).");
+        System.out.println("The more digits you choose, the harder the game will be.");
+        System.out.println("But the more digits you choose, the more points you will get.");
         System.out.println("Digits can be repeated in the secret code. Like \u001B[34m1122\u001B[0m.");
         System.out.println("After each guess, you will receive feedback:");
         System.out.println("\u001B[32mG\u001B[0m (from \u001B[32mGreen\u001B[0m) - means that you have " +
@@ -41,7 +44,7 @@ public class ConsoleUI
         user.setName(scanner.nextLine());
     }
 
-    public void seeComsRatsScores(ScoreServiceJDBC score, CommentServiceJDBC com, RatingServiceJDBC reting) {
+    public void seeComsRatsScores(ScoreServiceJDBC scoreservice, CommentServiceJDBC com, RatingServiceJDBC reting) {
         System.out.println("Before we start, you can check the top scores, ratings and comments of the game.");
         System.out.println("To do that, type 'yes'. If not, type anything else.");
         String input = scanner.nextLine();
@@ -56,11 +59,13 @@ public class ConsoleUI
                 switch (pick) {
                     case "topscores":
                         System.out.println("Top scores: ");
-                        List<Score> scores = score.getTopScores("Mastermind");
+                        List<Score> scores = scoreservice.getTopScores("Mastermind");
+                        scores.reversed(); // the fewer points you have, the fewer guesses you made -> the better
                         if (scores.isEmpty()) {
                             System.out.println("No scores available.");
                         } else {
-                            scores.forEach(System.out::println);
+                            scores.forEach(score -> System.out.println("Player: "
+                                    + score.getPlayer() + ", Score: " + score.getPoints()));
                         }
                         break;
                     case "comments":
@@ -69,7 +74,10 @@ public class ConsoleUI
                         if (comments.isEmpty()) {
                             System.out.println("No comments available.");
                         } else {
-                            comments.forEach(System.out::println);
+                            comments.forEach(comment -> System.out.println(
+                                    "Player: " + comment.getPlayer() +
+                                            ", Comment: " + comment.getComment() +
+                                        ", Date: " + new SimpleDateFormat("dd-MM-yyyy").format(comment.getCommentedOn())));
                         }
                         break;
                     case "avg":
@@ -145,7 +153,7 @@ public class ConsoleUI
 
     public void askForCommentRating(String name, Date date,
                                     CommentServiceJDBC commentService, RatingServiceJDBC ratingService) {
-        System.out.println("Would you like to leave a comment and rating? (yes/no)");
+        System.out.println("If you like to leave a comment or rate the game, type 'yes'. If not, type anything else.");
         String input = scanner.nextLine();
         if (input.equals("yes")) {
             System.out.println("Enter your comment: ");

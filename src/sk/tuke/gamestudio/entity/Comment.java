@@ -23,8 +23,8 @@ public class Comment
     public String getPlayer() { return player; }
     public void setPlayer(String player) { this.player = player; }
 
-    public Date getPlayedOn() { return playedOn; }
-    public void setPlayedOn(Date playedOn) { this.playedOn = playedOn; }
+    public Date getCommentedOn() { return playedOn; }
+    public void setCommentedOn(Date playedOn) { this.playedOn = playedOn; }
 
     public String getGame() { return game; }
     public void setGame(String game) { this.game = game; }

@@ -18,7 +18,7 @@ public class CodeGenerator
         for (int i = 0; i < code_length; i++)
             code[i] = rand.nextInt(10); // Random from 0 to 9
 
-        System.out.println("The secret code is " + java.util.Arrays.toString(code)); // for debugging
+//        System.out.println("The secret code is " + java.util.Arrays.toString(code)); // for debugging
         return code;
     }
 }

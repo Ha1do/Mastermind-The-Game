@@ -69,7 +69,9 @@ public class Game
         if (new String(answer).equals("G".repeat(code_length)))
         {
             guessed = true;
-            user.setScore(attempts);
+
+            int S = (int) ((code_length * Math.pow((50.0 / code_length), 1.2)) / attempts);
+            user.setScore(S); // the more digits in the code, the more points you get
             return;
         }
 
