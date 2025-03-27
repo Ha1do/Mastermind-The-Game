@@ -47,8 +47,8 @@ public class ConsoleUITest {
 
     @Test
     public void testWin() {
-        consoleUI.win(5);
+        consoleUI.win(5, 100);
         String output = outContent.toString();
-        assertTrue(output.contains("Congratulations! You guessed the secret code in 5 attempts."));
+        assertTrue(output.contains("Congratulations! You guessed the secret code in 5 attempts and you got 100 points."));
     }
 }

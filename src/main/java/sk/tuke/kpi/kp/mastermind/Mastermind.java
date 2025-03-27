@@ -32,7 +32,7 @@ public class Mastermind
         Game game = new Game(codeGenerator.generateSecretCode(), user, ui);
 
         game.play();
-        ui.win(game.getAttempts());
+        ui.win(game.getAttempts(), user.getScore());
 
         Score score = new Score("Mastermind", user.getName(), user.getScore(), d);
         scoreService.addScore(score);

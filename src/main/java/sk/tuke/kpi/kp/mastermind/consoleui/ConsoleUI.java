@@ -147,8 +147,8 @@ public class ConsoleUI
         System.out.println("\n");
     }
 
-    public void win(int attempts) {
-        System.out.println("Congratulations! You guessed the secret code in " + attempts + " attempts.");
+    public void win(int attempts, int score) {
+        System.out.println("Congratulations! You guessed the secret code in " + attempts + " attempts " + "and you got " + score + " points.");
     }
 
     public void askForCommentRating(String name, Date date,
