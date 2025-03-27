@@ -7,6 +7,7 @@ import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.service.*;
 
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -60,7 +61,6 @@ public class ConsoleUI
                     case "topscores":
                         System.out.println("Top scores: ");
                         List<Score> scores = scoreservice.getTopScores("Mastermind");
-                        scores.reversed(); // the fewer points you have, the fewer guesses you made -> the better
                         if (scores.isEmpty()) {
                             System.out.println("No scores available.");
                         } else {
