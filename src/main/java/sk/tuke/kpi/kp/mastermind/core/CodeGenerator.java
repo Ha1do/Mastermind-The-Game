@@ -1,4 +1,4 @@
-package main.java.sk.tuke.kpi.kp.mastermind.core;
+package sk.tuke.kpi.kp.mastermind.core;
 
 import java.util.Random;
 

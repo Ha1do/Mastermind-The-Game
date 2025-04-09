@@ -1,22 +1,28 @@
-package main.java.sk.tuke.kpi.kp.mastermind.consoleui;
+package sk.tuke.kpi.kp.mastermind.consoleui;
 
-import main.java.sk.tuke.kpi.kp.mastermind.core.User;
-import sk.tuke.gamestudio.entity.Comment;
-import sk.tuke.gamestudio.entity.Rating;
-import sk.tuke.gamestudio.entity.Score;
-import sk.tuke.gamestudio.service.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import sk.tuke.kpi.kp.mastermind.core.User;
+import sk.tuke.kpi.kp.mastermind.gamestudio.entity.Comment;
+import sk.tuke.kpi.kp.mastermind.gamestudio.entity.Rating;
+import sk.tuke.kpi.kp.mastermind.gamestudio.entity.Score;
+import sk.tuke.kpi.kp.mastermind.gamestudio.service.*;
 
 import java.text.SimpleDateFormat;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class ConsoleUI
 {
-    Scanner scanner = new Scanner(System.in);
-    Comment comment;
-    Rating rating;
+    private final Scanner scanner = new Scanner(System.in);
+    @Autowired
+    private ScoreService scoreService;
+    @Autowired
+    private CommentService commentService;
+    @Autowired
+    private RatingService ratingService;
 
     public void Welcome()
     {
@@ -45,47 +51,61 @@ public class ConsoleUI
         user.setName(scanner.nextLine());
     }
 
-    public void seeComsRatsScores(ScoreServiceJDBC scoreservice, CommentServiceJDBC com, RatingServiceJDBC reting) {
+    public void seeComsRatsScores(ScoreServiceJDBC scoreservice, CommentServiceJDBC com, RatingServiceJDBC reting)
+    {
+        scoreService = scoreservice;
+        commentService = com;
+        ratingService = reting;
+
         System.out.println("Before we start, you can check the top scores, ratings and comments of the game.");
         System.out.println("To do that, type 'yes'. If not, type anything else.");
         String input = scanner.nextLine();
-        if (input.equals("yes")) {
+        if (input.equals("yes"))
+        {
             System.out.println("If you want to see the top 4 players with the highest score, enter 'topscores'.");
             System.out.println("If you want to see the comments, enter 'comments'.");
             System.out.println("If you want to see the AVG game rating, enter 'avg'.");
             System.out.println("If you want to start the game, enter 'start'.");
 
             String pick = scanner.nextLine();
-            while (!(pick.equals("start"))) {
-                switch (pick) {
+            while (!(pick.equals("start")))
+            {
+                switch (pick)
+                {
                     case "topscores":
                         System.out.println("Top scores: ");
-                        List<Score> scores = scoreservice.getTopScores("Mastermind");
-                        if (scores.isEmpty()) {
+                        List<Score> scores = scoreService.getTopScores("Mastermind");
+                        if (scores.isEmpty())
+                        {
                             System.out.println("No scores available.");
-                        } else {
+                        } else
+                        {
                             scores.forEach(score -> System.out.println("Player: "
                                     + score.getPlayer() + ", Score: " + score.getPoints()));
                         }
                         break;
                     case "comments":
                         System.out.println("Comments: ");
-                        List<Comment> comments = com.getComments("Mastermind");
-                        if (comments.isEmpty()) {
+                        List<Comment> comments = commentService.getComments("Mastermind");
+                        if (comments.isEmpty())
+                        {
                             System.out.println("No comments available.");
-                        } else {
+                        } else
+                        {
                             comments.forEach(comment -> System.out.println(
                                     "Player: " + comment.getPlayer() +
                                             ", Comment: " + comment.getComment() +
-                                        ", Date: " + new SimpleDateFormat("dd-MM-yyyy").format(comment.getCommentedOn())));
+                                            ", Date: " + new SimpleDateFormat("dd-MM-yyyy").format(comment.getCommentedOn())));
                         }
                         break;
                     case "avg":
                         System.out.println("Average rating: ");
-                        try {
-                            int avgRating = reting.getAverageRating("Mastermind");
+                        try
+                        {
+                            int avgRating = ratingService.getAverageRating("Mastermind");
                             System.out.println(avgRating);
-                        } catch (RatingException e) {
+                        } catch (RatingException e)
+                        {
                             System.out.println("No ratings available.");
                         }
                         break;
@@ -111,7 +131,7 @@ public class ConsoleUI
         }
     }
 
-    public int[] attempGuess (int count)
+    public int[] attempGuess(int count)
     {
         System.out.print("Enter your guess: ");
         String input = scanner.nextLine();
@@ -123,15 +143,14 @@ public class ConsoleUI
                 guess[i] = Character.getNumericValue(input.charAt(i));
             }
             return guess;
-        }
-        else
+        } else
         {
             System.out.print("Wrong input. Please enter a number with " + count + " digits: \n");
             return attempGuess(count);
         }
     }
 
-    public void feedBack (char[] answer)
+    public void feedBack(char[] answer)
     {
         System.out.print("Your guess is   : ");
         for (char match : answer)
@@ -147,35 +166,44 @@ public class ConsoleUI
         System.out.println("\n");
     }
 
-    public void win(int attempts, int score) {
+    public void win(int attempts, int score)
+    {
         System.out.println("Congratulations! You guessed the secret code in " + attempts + " attempts " + "and you got " + score + " points.");
     }
 
     public void askForCommentRating(String name, Date date,
-                                    CommentServiceJDBC commentService, RatingServiceJDBC ratingService) {
+                                    CommentServiceJDBC commentServic, RatingServiceJDBC ratingServic)
+    {
+        commentService = commentServic;
+        ratingService = ratingServic;
+
+
         System.out.println("If you like to leave a comment or rate the game, type 'yes'. If not, type anything else.");
         String input = scanner.nextLine();
-        if (input.equals("yes")) {
+        if (input.equals("yes"))
+        {
             System.out.println("Enter your comment: ");
             String com = scanner.nextLine();
 
             System.out.println("Enter your rating from 1 to 10: ");
             String inputRat = scanner.nextLine();
-            while (!inputRat.matches("[1-9]|10")) {
+            while (!inputRat.matches("[1-9]|10"))
+            {
                 System.out.println("Wrong input. Please enter a number from 1 to 10: ");
                 inputRat = scanner.nextLine();
             }
             int rat = Integer.parseInt(inputRat);
 
-            comment = new Comment(com, name, date, "Mastermind");
-            rating = new Rating(name, rat, date, "Mastermind");
+            Comment comment = new Comment(com, name, date, "Mastermind");
+            Rating rating = new Rating(name, rat, date, "Mastermind");
 
             commentService.addComment(comment);
             ratingService.setRating(rating);
         }
     }
 
-    public void End() {
+    public void End()
+    {
         System.out.println("Goodbye!");
         scanner.close();
     }

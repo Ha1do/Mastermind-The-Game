@@ -1,6 +1,6 @@
-package sk.tuke.gamestudio.service;
+package sk.tuke.kpi.kp.mastermind.gamestudio.service;
 
-import sk.tuke.gamestudio.entity.Rating;
+import sk.tuke.kpi.kp.mastermind.gamestudio.entity.Rating;
 
 import java.sql.*;
 

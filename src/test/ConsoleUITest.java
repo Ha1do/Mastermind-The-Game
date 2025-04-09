@@ -1,11 +1,10 @@
-package test.java.sk.tuke.kpi.kp.mastermind;
+package test;
 
-import main.java.sk.tuke.kpi.kp.mastermind.consoleui.ConsoleUI;
-import main.java.sk.tuke.kpi.kp.mastermind.core.User;
+import sk.tuke.kpi.kp.mastermind.consoleui.ConsoleUI;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.io.ByteArrayInputStream;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import static org.junit.jupiter.api.Assertions.*;

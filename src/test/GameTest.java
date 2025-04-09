@@ -1,9 +1,10 @@
-package test.java.sk.tuke.kpi.kp.mastermind;
+package test;
 
-import main.java.sk.tuke.kpi.kp.mastermind.core.Game;
-import main.java.sk.tuke.kpi.kp.mastermind.consoleui.ConsoleUI;
-import main.java.sk.tuke.kpi.kp.mastermind.core.User;
+import sk.tuke.kpi.kp.mastermind.core.Game;
+import sk.tuke.kpi.kp.mastermind.consoleui.ConsoleUI;
+import sk.tuke.kpi.kp.mastermind.core.User;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameTest {

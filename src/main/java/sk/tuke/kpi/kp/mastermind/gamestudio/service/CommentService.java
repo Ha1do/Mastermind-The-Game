@@ -1,6 +1,6 @@
-package sk.tuke.gamestudio.service;
+package sk.tuke.kpi.kp.mastermind.gamestudio.service;
 
-import sk.tuke.gamestudio.entity.Comment;
+import sk.tuke.kpi.kp.mastermind.gamestudio.entity.Comment;
 
 import java.util.List;
 

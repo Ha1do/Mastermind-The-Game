@@ -1,11 +1,11 @@
-package test.java.sk.tuke.kpi.kp.mastermind;
+package test;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import sk.tuke.gamestudio.entity.Score;
-import sk.tuke.gamestudio.entity.Rating;
-import sk.tuke.gamestudio.entity.Comment;
-import sk.tuke.gamestudio.service.*;
+import sk.tuke.kpi.kp.mastermind.gamestudio.entity.Comment;
+import sk.tuke.kpi.kp.mastermind.gamestudio.entity.Rating;
+import sk.tuke.kpi.kp.mastermind.gamestudio.entity.Score;
+import sk.tuke.kpi.kp.mastermind.gamestudio.service.*;
 
 import java.util.Date;
 import java.util.List;
