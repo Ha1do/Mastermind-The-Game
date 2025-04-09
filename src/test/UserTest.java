@@ -1,6 +1,6 @@
 package test;
 
-import sk.tuke.kpi.kp.mastermind.core.User;
+import sk.tuke.kpi.kp.gamestudio.core.User;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

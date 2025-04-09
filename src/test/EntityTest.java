@@ -1,10 +1,9 @@
 package test;
 
 import org.junit.jupiter.api.Test;
-import sk.tuke.kpi.kp.mastermind.gamestudio.entity.Comment;
-import sk.tuke.kpi.kp.mastermind.gamestudio.entity.Rating;
-import sk.tuke.kpi.kp.mastermind.gamestudio.entity.Score;
-import sk.tuke.kpi.kp.mastermind.gamestudio.service.*;
+import sk.tuke.kpi.kp.gamestudio.entity.Comment;
+import sk.tuke.kpi.kp.gamestudio.entity.Rating;
+import sk.tuke.kpi.kp.gamestudio.entity.Score;
 
 import java.util.Date;
 

@@ -1,9 +1,9 @@
-package sk.tuke.kpi.kp.mastermind.gamestudio.service;
+package sk.tuke.kpi.kp.gamestudio.service;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
-import sk.tuke.kpi.kp.mastermind.gamestudio.entity.Rating;
+import sk.tuke.kpi.kp.gamestudio.entity.Rating;
 
 @Transactional
 public class RatingServiceJPA implements RatingService {

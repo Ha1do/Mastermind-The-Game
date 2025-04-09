@@ -1,6 +1,6 @@
-package sk.tuke.kpi.kp.mastermind.gamestudio.service;
+package sk.tuke.kpi.kp.gamestudio.service;
 
-import sk.tuke.kpi.kp.mastermind.gamestudio.entity.Rating;
+import sk.tuke.kpi.kp.gamestudio.entity.Rating;
 
 public interface RatingService {
     void setRating(Rating rating) throws RatingException;

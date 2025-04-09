@@ -1,4 +1,4 @@
-package sk.tuke.kpi.kp.mastermind.core;
+package sk.tuke.kpi.kp.gamestudio.core;
 
 public class User
 {

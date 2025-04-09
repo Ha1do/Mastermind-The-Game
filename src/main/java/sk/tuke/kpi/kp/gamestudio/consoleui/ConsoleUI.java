@@ -1,14 +1,16 @@
-package sk.tuke.kpi.kp.mastermind.consoleui;
+package sk.tuke.kpi.kp.gamestudio.consoleui;
 
 import org.springframework.stereotype.Component;
-import sk.tuke.kpi.kp.mastermind.core.User;
-import sk.tuke.kpi.kp.mastermind.gamestudio.entity.Comment;
-import sk.tuke.kpi.kp.mastermind.gamestudio.entity.Rating;
-import sk.tuke.kpi.kp.mastermind.gamestudio.entity.Score;
-import sk.tuke.kpi.kp.mastermind.gamestudio.service.*;
+import sk.tuke.kpi.kp.gamestudio.core.User;
+import sk.tuke.kpi.kp.gamestudio.entity.Comment;
+import sk.tuke.kpi.kp.gamestudio.entity.Rating;
+import sk.tuke.kpi.kp.gamestudio.entity.Score;
+import sk.tuke.kpi.kp.gamestudio.service.CommentServiceJDBC;
+import sk.tuke.kpi.kp.gamestudio.service.RatingException;
+import sk.tuke.kpi.kp.gamestudio.service.RatingServiceJDBC;
+import sk.tuke.kpi.kp.gamestudio.service.ScoreServiceJDBC;
 
 import java.text.SimpleDateFormat;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;

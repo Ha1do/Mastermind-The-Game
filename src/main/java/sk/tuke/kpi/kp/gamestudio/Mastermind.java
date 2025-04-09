@@ -1,20 +1,19 @@
-package sk.tuke.kpi.kp.mastermind;
+package sk.tuke.kpi.kp.gamestudio;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import sk.tuke.kpi.kp.mastermind.consoleui.ConsoleUI;
-import sk.tuke.kpi.kp.mastermind.core.CodeGenerator;
-import sk.tuke.kpi.kp.mastermind.core.Game;
-import sk.tuke.kpi.kp.mastermind.core.User;
-import sk.tuke.kpi.kp.mastermind.gamestudio.entity.Comment;
-import sk.tuke.kpi.kp.mastermind.gamestudio.entity.Rating;
-import sk.tuke.kpi.kp.mastermind.gamestudio.entity.Score;
-import sk.tuke.kpi.kp.mastermind.gamestudio.service.*;
+import sk.tuke.kpi.kp.gamestudio.consoleui.ConsoleUI;
+import sk.tuke.kpi.kp.gamestudio.core.CodeGenerator;
+import sk.tuke.kpi.kp.gamestudio.core.Game;
+import sk.tuke.kpi.kp.gamestudio.core.User;
+import sk.tuke.kpi.kp.gamestudio.entity.Score;
+import sk.tuke.kpi.kp.gamestudio.service.CommentServiceJDBC;
+import sk.tuke.kpi.kp.gamestudio.service.RatingServiceJDBC;
+import sk.tuke.kpi.kp.gamestudio.service.ScoreServiceJDBC;
 
 import java.util.Date;
-import java.util.List;
 
 @SpringBootApplication
 public class Mastermind implements CommandLineRunner

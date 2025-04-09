@@ -1,4 +1,4 @@
-package sk.tuke.kpi.kp.mastermind.gamestudio.service;
+package sk.tuke.kpi.kp.gamestudio.service;
 
 public class CommentException extends RuntimeException {
     public CommentException(String message) {

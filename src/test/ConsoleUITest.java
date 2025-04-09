@@ -1,6 +1,6 @@
 package test;
 
-import sk.tuke.kpi.kp.mastermind.consoleui.ConsoleUI;
+import sk.tuke.kpi.kp.gamestudio.consoleui.ConsoleUI;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

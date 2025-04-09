@@ -1,4 +1,4 @@
-package sk.tuke.kpi.kp.mastermind.gamestudio.service;
+package sk.tuke.kpi.kp.gamestudio.service;
 
 public class RatingException extends RuntimeException {
     public RatingException(String message) {

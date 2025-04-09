@@ -1,10 +1,9 @@
-package sk.tuke.kpi.kp.mastermind.gamestudio.service;
+package sk.tuke.kpi.kp.gamestudio.service;
 
 import org.springframework.stereotype.Service;
-import sk.tuke.kpi.kp.mastermind.gamestudio.entity.Score;
+import sk.tuke.kpi.kp.gamestudio.entity.Score;
 
 import java.sql.*;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 

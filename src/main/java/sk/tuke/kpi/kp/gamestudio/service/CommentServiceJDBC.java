@@ -1,7 +1,7 @@
-package sk.tuke.kpi.kp.mastermind.gamestudio.service;
+package sk.tuke.kpi.kp.gamestudio.service;
 
 import org.springframework.stereotype.Service;
-import sk.tuke.kpi.kp.mastermind.gamestudio.entity.Comment;
+import sk.tuke.kpi.kp.gamestudio.entity.Comment;
 
 import java.sql.*;
 import java.util.ArrayList;
