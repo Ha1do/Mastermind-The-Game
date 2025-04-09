@@ -2,10 +2,10 @@ package test;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import sk.tuke.kpi.kp.gamestudio.entity.Comment;
-import sk.tuke.kpi.kp.gamestudio.entity.Rating;
-import sk.tuke.kpi.kp.gamestudio.entity.Score;
-import sk.tuke.kpi.kp.gamestudio.service.*;
+import sk.tuke.gamestudio.entity.Comment;
+import sk.tuke.gamestudio.entity.Rating;
+import sk.tuke.gamestudio.entity.Score;
+import sk.tuke.gamestudio.service.*;
 
 import java.util.Date;
 import java.util.List;

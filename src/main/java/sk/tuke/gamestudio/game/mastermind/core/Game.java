@@ -1,6 +1,6 @@
-package sk.tuke.kpi.kp.gamestudio.core;
+package sk.tuke.gamestudio.game.mastermind.core;
 
-import sk.tuke.kpi.kp.gamestudio.consoleui.ConsoleUI;
+import sk.tuke.gamestudio.game.mastermind.consoleui.ConsoleUI;
 
 import java.util.Arrays;
 

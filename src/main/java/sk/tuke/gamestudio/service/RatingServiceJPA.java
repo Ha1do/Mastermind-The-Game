@@ -1,9 +1,9 @@
-package sk.tuke.kpi.kp.gamestudio.service;
+package sk.tuke.gamestudio.service;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
-import sk.tuke.kpi.kp.gamestudio.entity.Rating;
+import sk.tuke.gamestudio.entity.Rating;
 
 @Transactional
 public class RatingServiceJPA implements RatingService {
@@ -11,8 +11,10 @@ public class RatingServiceJPA implements RatingService {
     private EntityManager entityManager;
 
     @Override
-    public void setRating(Rating rating) throws RatingException
-    {
+    public void setRating(Rating rating) throws RatingException {
+        if (rating == null || rating.getRating() < 1 || rating.getRating() > 10) {
+            throw new RatingException("Invalid rating value. Rating must be between 1 and 10.");
+        }
         entityManager.createNamedQuery("Rating.resetRatings")
                 .setParameter("game", rating.getGame())
                 .setParameter("player", rating.getPlayer())

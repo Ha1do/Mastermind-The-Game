@@ -1,24 +1,34 @@
-package sk.tuke.kpi.kp.gamestudio.consoleui;
+package sk.tuke.gamestudio.game.mastermind.consoleui;
 
 import org.springframework.stereotype.Component;
-import sk.tuke.kpi.kp.gamestudio.core.User;
-import sk.tuke.kpi.kp.gamestudio.entity.Comment;
-import sk.tuke.kpi.kp.gamestudio.entity.Rating;
-import sk.tuke.kpi.kp.gamestudio.entity.Score;
-import sk.tuke.kpi.kp.gamestudio.service.CommentServiceJDBC;
-import sk.tuke.kpi.kp.gamestudio.service.RatingException;
-import sk.tuke.kpi.kp.gamestudio.service.RatingServiceJDBC;
-import sk.tuke.kpi.kp.gamestudio.service.ScoreServiceJDBC;
+import sk.tuke.gamestudio.game.mastermind.core.User;
+import sk.tuke.gamestudio.entity.Comment;
+import sk.tuke.gamestudio.entity.Rating;
+import sk.tuke.gamestudio.entity.Score;
+import sk.tuke.gamestudio.service.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-@Component
 public class ConsoleUI
 {
     private final Scanner scanner = new Scanner(System.in);
+
+    private final ScoreServiceJPA scoreService;
+    private final CommentServiceJPA commentService;
+    private final RatingServiceJPA ratingService;
+
+    public ConsoleUI(ScoreServiceJPA scoreService, CommentServiceJPA commentService, RatingServiceJPA ratingService) {
+        this.scoreService = scoreService;
+        this.commentService = commentService;
+        this.ratingService = ratingService;
+    }
+
+    public ScoreServiceJPA getScoreService() { return scoreService; }
+    public CommentServiceJPA getCommentService() { return commentService; }
+    public RatingServiceJPA getRatingService() { return ratingService; }
 
     public void Welcome()
     {
@@ -47,7 +57,7 @@ public class ConsoleUI
         user.setName(scanner.nextLine());
     }
 
-    public void seeComsRatsScores(ScoreServiceJDBC scoreservice, CommentServiceJDBC com, RatingServiceJDBC reting)
+    public void seeComsRatsScores(ScoreServiceJPA scoreservice, CommentServiceJPA com, RatingServiceJPA reting)
     {
         System.out.println("Before we start, you can check the top scores, ratings and comments of the game.");
         System.out.println("To do that, type 'yes'. If not, type anything else.");
@@ -164,19 +174,16 @@ public class ConsoleUI
     }
 
     public void askForCommentRating(String name, Date date,
-                                    CommentServiceJDBC commentService, RatingServiceJDBC ratingService)
-    {
+                                    CommentServiceJPA commentService, RatingServiceJPA ratingService) {
         System.out.println("If you like to leave a comment or rate the game, type 'yes'. If not, type anything else.");
         String input = scanner.nextLine();
-        if (input.equals("yes"))
-        {
+        if (input.equals("yes")) {
             System.out.println("Enter your comment: ");
             String com = scanner.nextLine();
 
             System.out.println("Enter your rating from 1 to 10: ");
             String inputRat = scanner.nextLine();
-            while (!inputRat.matches("[1-9]|10"))
-            {
+            while (!inputRat.matches("[1-9]|10")) {
                 System.out.println("Wrong input. Please enter a number from 1 to 10: ");
                 inputRat = scanner.nextLine();
             }
@@ -186,7 +193,11 @@ public class ConsoleUI
             Rating rating = new Rating(name, rat, date, "Mastermind");
 
             commentService.addComment(comment);
-            ratingService.setRating(rating);
+            try {
+                ratingService. setRating(rating);
+            } catch (RatingException e) {
+                System.out.println("Failed to save rating: " + e.getMessage());
+            }
         }
     }
 

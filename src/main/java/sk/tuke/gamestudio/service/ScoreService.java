@@ -1,6 +1,6 @@
-package sk.tuke.kpi.kp.gamestudio.service;
+package sk.tuke.gamestudio.service;
 
-import sk.tuke.kpi.kp.gamestudio.entity.Score;
+import sk.tuke.gamestudio.entity.Score;
 
 import java.util.List;
 

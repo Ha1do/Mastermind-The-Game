@@ -1,4 +1,4 @@
-package sk.tuke.kpi.kp.gamestudio.entity;
+package sk.tuke.gamestudio.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
