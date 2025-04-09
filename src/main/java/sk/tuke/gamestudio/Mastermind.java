@@ -2,7 +2,9 @@ package sk.tuke.gamestudio;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import sk.tuke.gamestudio.game.mastermind.consoleui.ConsoleUI;
@@ -19,10 +21,12 @@ import java.util.Date;
 public class Mastermind
 {
 
-    public static void main(String[] args)
-    {
-        SpringApplication.run(Mastermind.class, args);
+    public static void main(String[] args) {
+        new SpringApplicationBuilder(Mastermind.class)
+                .web(WebApplicationType.NONE)
+                .run(args);
     }
+
 
     @Bean
     public CommandLineRunner runner(ConsoleUI ui)
