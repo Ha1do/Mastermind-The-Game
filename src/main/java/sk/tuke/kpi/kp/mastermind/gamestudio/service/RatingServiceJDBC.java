@@ -1,9 +1,11 @@
 package sk.tuke.kpi.kp.mastermind.gamestudio.service;
 
+import org.springframework.stereotype.Service;
 import sk.tuke.kpi.kp.mastermind.gamestudio.entity.Rating;
 
 import java.sql.*;
 
+@Service
 public class RatingServiceJDBC implements RatingService {
     public static final String URL = "jdbc:postgresql://localhost/gamestudio";
     public static final String USER = "postgres";

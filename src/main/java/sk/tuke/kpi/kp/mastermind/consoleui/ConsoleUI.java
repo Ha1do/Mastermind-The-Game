@@ -1,6 +1,5 @@
 package sk.tuke.kpi.kp.mastermind.consoleui;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import sk.tuke.kpi.kp.mastermind.core.User;
 import sk.tuke.kpi.kp.mastermind.gamestudio.entity.Comment;
@@ -9,6 +8,7 @@ import sk.tuke.kpi.kp.mastermind.gamestudio.entity.Score;
 import sk.tuke.kpi.kp.mastermind.gamestudio.service.*;
 
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -17,12 +17,6 @@ import java.util.Scanner;
 public class ConsoleUI
 {
     private final Scanner scanner = new Scanner(System.in);
-    @Autowired
-    private ScoreService scoreService;
-    @Autowired
-    private CommentService commentService;
-    @Autowired
-    private RatingService ratingService;
 
     public void Welcome()
     {
@@ -53,10 +47,6 @@ public class ConsoleUI
 
     public void seeComsRatsScores(ScoreServiceJDBC scoreservice, CommentServiceJDBC com, RatingServiceJDBC reting)
     {
-        scoreService = scoreservice;
-        commentService = com;
-        ratingService = reting;
-
         System.out.println("Before we start, you can check the top scores, ratings and comments of the game.");
         System.out.println("To do that, type 'yes'. If not, type anything else.");
         String input = scanner.nextLine();
@@ -74,7 +64,7 @@ public class ConsoleUI
                 {
                     case "topscores":
                         System.out.println("Top scores: ");
-                        List<Score> scores = scoreService.getTopScores("Mastermind");
+                        List<Score> scores = scoreservice.getTopScores("Mastermind");
                         if (scores.isEmpty())
                         {
                             System.out.println("No scores available.");
@@ -86,7 +76,7 @@ public class ConsoleUI
                         break;
                     case "comments":
                         System.out.println("Comments: ");
-                        List<Comment> comments = commentService.getComments("Mastermind");
+                        List<Comment> comments = com.getComments("Mastermind");
                         if (comments.isEmpty())
                         {
                             System.out.println("No comments available.");
@@ -102,7 +92,7 @@ public class ConsoleUI
                         System.out.println("Average rating: ");
                         try
                         {
-                            int avgRating = ratingService.getAverageRating("Mastermind");
+                            int avgRating = reting.getAverageRating("Mastermind");
                             System.out.println(avgRating);
                         } catch (RatingException e)
                         {
@@ -172,12 +162,8 @@ public class ConsoleUI
     }
 
     public void askForCommentRating(String name, Date date,
-                                    CommentServiceJDBC commentServic, RatingServiceJDBC ratingServic)
+                                    CommentServiceJDBC commentService, RatingServiceJDBC ratingService)
     {
-        commentService = commentServic;
-        ratingService = ratingServic;
-
-
         System.out.println("If you like to leave a comment or rate the game, type 'yes'. If not, type anything else.");
         String input = scanner.nextLine();
         if (input.equals("yes"))

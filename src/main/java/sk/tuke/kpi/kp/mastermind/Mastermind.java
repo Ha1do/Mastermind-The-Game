@@ -1,5 +1,9 @@
 package sk.tuke.kpi.kp.mastermind;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import sk.tuke.kpi.kp.mastermind.consoleui.ConsoleUI;
 import sk.tuke.kpi.kp.mastermind.core.CodeGenerator;
 import sk.tuke.kpi.kp.mastermind.core.Game;
@@ -12,16 +16,28 @@ import sk.tuke.kpi.kp.mastermind.gamestudio.service.*;
 import java.util.Date;
 import java.util.List;
 
-public class Mastermind
+@SpringBootApplication
+public class Mastermind implements CommandLineRunner
 {
-    public static void main(String[] args)
-    {
-        ScoreServiceJDBC scoreService = new ScoreServiceJDBC();
-        CommentServiceJDBC commentService = new CommentServiceJDBC();
-        RatingServiceJDBC ratingService = new RatingServiceJDBC();
+    @Autowired
+    private ConsoleUI ui;
 
+    @Autowired
+    private ScoreServiceJDBC scoreService;
+
+    @Autowired
+    private CommentServiceJDBC commentService;
+
+    @Autowired
+    private RatingServiceJDBC ratingService;
+
+    public static void main(String[] args) {
+        SpringApplication.run(Mastermind.class, args);
+    }
+
+    @Override
+    public void run(String... args) {
         Date d = new Date();
-        ConsoleUI ui = new ConsoleUI();
         ui.Welcome();
         User user = new User();
         ui.AskForName(user);
