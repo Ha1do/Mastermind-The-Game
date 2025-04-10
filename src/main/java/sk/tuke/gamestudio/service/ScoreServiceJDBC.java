@@ -1,13 +1,11 @@
 package sk.tuke.gamestudio.service;
 
-import org.springframework.stereotype.Service;
 import sk.tuke.gamestudio.entity.Score;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
 public class ScoreServiceJDBC implements ScoreService {
     public static final String URL = "jdbc:postgresql://localhost/gamestudio";
     public static final String USER = "postgres";

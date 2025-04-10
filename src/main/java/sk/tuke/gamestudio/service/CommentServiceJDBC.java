@@ -7,7 +7,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
 public class CommentServiceJDBC implements CommentService
 {
     public static final String URL = "jdbc:postgresql://localhost/gamestudio";

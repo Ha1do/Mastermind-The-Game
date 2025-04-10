@@ -16,19 +16,19 @@ public class ConsoleUI
 {
     private final Scanner scanner = new Scanner(System.in);
 
-    private final ScoreServiceJPA scoreService;
-    private final CommentServiceJPA commentService;
-    private final RatingServiceJPA ratingService;
+    private final ScoreService scoreService;
+    private final CommentService commentService;
+    private final RatingService ratingService;
 
-    public ConsoleUI(ScoreServiceJPA scoreService, CommentServiceJPA commentService, RatingServiceJPA ratingService) {
+    public ConsoleUI(ScoreService scoreService, CommentService commentService, RatingService ratingService) {
         this.scoreService = scoreService;
         this.commentService = commentService;
         this.ratingService = ratingService;
     }
 
-    public ScoreServiceJPA getScoreService() { return scoreService; }
-    public CommentServiceJPA getCommentService() { return commentService; }
-    public RatingServiceJPA getRatingService() { return ratingService; }
+    public ScoreService getScoreService() { return scoreService; }
+    public CommentService getCommentService() { return commentService; }
+    public RatingService getRatingService() { return ratingService; }
 
     public void Welcome()
     {
@@ -57,7 +57,7 @@ public class ConsoleUI
         user.setName(scanner.nextLine());
     }
 
-    public void seeComsRatsScores(ScoreServiceJPA scoreservice, CommentServiceJPA com, RatingServiceJPA reting)
+    public void seeComsRatsScores(ScoreService scoreservice, CommentService com, RatingService reting)
     {
         System.out.println("Before we start, you can check the top scores, ratings and comments of the game.");
         System.out.println("To do that, type 'yes'. If not, type anything else.");
@@ -174,7 +174,7 @@ public class ConsoleUI
     }
 
     public void askForCommentRating(String name, Date date,
-                                    CommentServiceJPA commentService, RatingServiceJPA ratingService) {
+                                    CommentService commentService, RatingService ratingService) {
         System.out.println("If you like to leave a comment or rate the game, type 'yes'. If not, type anything else.");
         String input = scanner.nextLine();
         if (input.equals("yes")) {

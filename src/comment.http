@@ -1,0 +1,15 @@
+# Add a comment
+POST http://localhost:8080/api/comment
+Content-Type: application/json
+
+{
+  "player": "testPlayer",
+  "game": "mastermind",
+  "comment": "Great game!",
+  "commentedOn": "2023-10-01T12:00:00"
+}
+
+###
+
+# Get comments for a game
+GET http://localhost:8080/api/comment/mastermind

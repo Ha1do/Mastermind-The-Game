@@ -1,12 +1,16 @@
 package sk.tuke.gamestudio;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.web.client.RestTemplate;
 import sk.tuke.gamestudio.game.mastermind.consoleui.ConsoleUI;
 import sk.tuke.gamestudio.game.mastermind.core.CodeGenerator;
 import sk.tuke.gamestudio.game.mastermind.core.Game;
@@ -18,6 +22,8 @@ import java.util.Date;
 
 @SpringBootApplication
 @Configuration
+@ComponentScan(excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX,
+        pattern = "sk.tuke.gamestudio.server.*"))
 public class Mastermind
 {
 
@@ -55,22 +61,32 @@ public class Mastermind
     }
 
     @Bean
-    public ScoreServiceJPA scoreServiceJPA() {
-        return new ScoreServiceJPA();
+    public ScoreService scoreServiceJPA() {
+//        return new ScoreServiceJPA();
+        return new ScoreServiceRestClient();
     }
 
     @Bean
-    public CommentServiceJPA commentServiceJPA() {
-        return new CommentServiceJPA();
+    public CommentService commentServiceJPA() {
+//        return new CommentServiceJPA();
+        return new CommentServiceRestClient();
     }
 
     @Bean
-    public RatingServiceJPA ratingServiceJPA() {
-        return new RatingServiceJPA();
+    public RatingService ratingServiceJPA() {
+//        return new RatingServiceJPA();
+        return new RatingServiceRestClient();
     }
 
     @Bean
-    public ConsoleUI consoleUI(ScoreServiceJPA scoreService, CommentServiceJPA commentService, RatingServiceJPA ratingService) {
+    public ConsoleUI consoleUI(@Qualifier("scoreServiceRestClient") ScoreService scoreService,
+                               @Qualifier("commentServiceRestClient") CommentService commentService,
+                               @Qualifier("ratingServiceRestClient") RatingService ratingService) {
         return new ConsoleUI(scoreService, commentService, ratingService);
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 }
