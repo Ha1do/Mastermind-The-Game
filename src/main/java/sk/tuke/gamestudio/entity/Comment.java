@@ -10,40 +10,40 @@ import java.util.Date;
 
 @Entity
 @NamedQuery(name = "Comment.getComments",
-        query = "SELECT c FROM Comment c WHERE c.game=:game ORDER BY c.playedOn DESC")
+        query = "SELECT c FROM Comment c WHERE c.game=:game ORDER BY c.commented_on DESC")
 @NamedQuery(name = "Comment.resetComments",
         query = "DELETE FROM Comment")
 public class Comment implements Serializable
 {
     @Id
     @GeneratedValue
-    private int ident;
+    private int id;
 
     private String game;
     private String comment;
     private String player;
-    private Date playedOn;
+    private Date commented_on;
 
     public Comment()
     {
     }
 
-    public Comment(String comment, String player, Date playedOn, String game)
+    public Comment(String comment, String player, Date commented_on, String game)
     {
         this.comment = comment;
         this.player = player;
-        this.playedOn = playedOn;
+        this.commented_on = commented_on;
         this.game = game;
     }
 
     public int getIdent()
     {
-        return ident;
+        return id;
     }
 
-    public void setIdent(int ident)
+    public void setIdent(int id)
     {
-        this.ident = ident;
+        this.id = id;
     }
 
     public String getComment()
@@ -68,12 +68,12 @@ public class Comment implements Serializable
 
     public Date getCommentedOn()
     {
-        return playedOn;
+        return commented_on;
     }
 
-    public void setCommentedOn(Date playedOn)
+    public void setCommentedOn(Date commented_on)
     {
-        this.playedOn = playedOn;
+        this.commented_on = commented_on;
     }
 
     public String getGame()

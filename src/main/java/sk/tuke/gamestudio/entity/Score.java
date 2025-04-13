@@ -17,7 +17,7 @@ public class Score implements Serializable
 {
     @Id
     @GeneratedValue
-    private int ident;
+    private int id;
 
     private String game;
     private String player;
@@ -34,8 +34,8 @@ public class Score implements Serializable
         this.playedOn = playedOn;
     }
 
-    public int getIdent() { return ident; }
-    public void setIdent(int ident) { this.ident = ident; }
+    public int getIdent() { return id; }
+    public void setIdent(int id) { this.id = id; }
 
     public String getGame()
     {

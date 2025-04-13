@@ -6,23 +6,21 @@ import sk.tuke.gamestudio.entity.Rating;
 import java.sql.*;
 
 public class RatingServiceJDBC implements RatingService {
-    public static final String URL = "jdbc:postgresql://localhost/gamestudio";
+    public static final String URL = "jdbc:postgresql://localhost/postgres";
     public static final String USER = "postgres";
     public static final String PASSWORD = "postgres";
     public static final String SELECT = "SELECT rating FROM rating WHERE game = ?";
     public static final String SELECT_USER = "SELECT rating FROM rating WHERE game = ? AND player = ?";
     public static final String DELETE = "DELETE FROM rating";
-    public static final String INSERT = "INSERT INTO rating (id ,game, player, rating, rated_on) VALUES (?, ?, ?, ?, ?)";
+    public static final String INSERT = "INSERT INTO rating (game, player, rating, rated_on) VALUES (?, ?, ?, ?)";
     public static final String UPDATE = "UPDATE rating SET rating = ?, rated_on = ? WHERE game = ? AND player = ?";
 
     @Override
     public void setRating(Rating rating) {
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(SELECT_USER)
-        ) {
-            statement.setInt(1, rating.getIdent());
-            statement.setString(2, rating.getGame());
-            statement.setString(3, rating.getPlayer());
+             PreparedStatement statement = connection.prepareStatement(SELECT_USER)) {
+            statement.setString(1, rating.getGame());
+            statement.setString(2, rating.getPlayer());
             try (ResultSet rs = statement.executeQuery()) {
                 if (rs.next()) {
                     try (PreparedStatement updateStatement = connection.prepareStatement(UPDATE)) {

@@ -17,7 +17,7 @@ public class Rating implements Serializable
 {
     @Id
     @GeneratedValue
-    private int ident;
+    private int id;
 
     private String game;
     private String player;
@@ -36,12 +36,12 @@ public class Rating implements Serializable
 
     public int getIdent()
     {
-        return ident;
+        return id;
     }
 
-    public void setIdent(int ident)
+    public void setIdent(int id)
     {
-        this.ident = ident;
+        this.id = id;
     }
 
     public String getPlayer()
