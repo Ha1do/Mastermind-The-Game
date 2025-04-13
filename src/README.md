@@ -1,4 +1,5 @@
 video - https://youtu.be/tKVOjQ5uhuU
-(by) Ivan Honcharuk
 
-TODO check tests
+second vid - https://youtu.be/OSmzJXh0Juk
+
+(by) Ivan Honcharuk

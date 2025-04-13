@@ -1,9 +1,0 @@
-POST http://localhost:8080/rest/api/v1/gamestudio
-Content-Type: application/json
-
-{
-  "game": "masteermind",
-  "player": "testPlayer",
-  "points": 100,
-  "playtime": "2025-04-10T09:37:00"
-}
