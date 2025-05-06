@@ -33,7 +33,7 @@ public class Game
     }
 
 
-    public void checkGuess(int[] guess)
+    public void checkGuess(int[] guess) // console
     {
         attempts++;
         int[] numsCount = new int[10];
@@ -81,4 +81,47 @@ public class Game
     public boolean isGuessed() { return guessed; }
 
     public int getAttempts() { return attempts; }
+// ============================================WEB====================================================
+    public char[] checkGuessAndReturnFeedback(int[] guess) // WEB
+    {
+        attempts++;
+        int[] numsCount = new int[10];
+        char[] answer = new char[code_length];
+        Arrays.fill(answer, 'N');
+        for (int num : secretCode) numsCount[num]++;
+
+        for (int i = 0; i < code_length; i++)
+        {
+            if (guess[i] == secretCode[i])
+            {
+                answer[i] = 'G';
+                numsCount[guess[i]]--;
+            }
+        }
+
+        for (int i = 0; i < code_length; i++)
+        {
+            if (answer[i] != 'G')
+            {
+                for (int j = 0; j < code_length; j++)
+                {
+                    if (guess[i] == secretCode[j] && i != j && numsCount[guess[i]] > 0)
+                    {
+                        answer[i] = 'Y';
+                        numsCount[guess[i]]--;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (new String(answer).equals("G".repeat(code_length)))
+        {
+            guessed = true;
+
+            int S = (int) ((code_length * Math.pow((50.0 / code_length), 1.2)) / attempts);
+            user.setScore(S); // the more digits in the code, the more points you get
+        }
+        return answer;
+    }
 }

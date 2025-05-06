@@ -1,5 +1,3 @@
-package test;
-
 import sk.tuke.gamestudio.game.mastermind.core.Game;
 import sk.tuke.gamestudio.game.mastermind.consoleui.ConsoleUI;
 import sk.tuke.gamestudio.game.mastermind.core.User;
