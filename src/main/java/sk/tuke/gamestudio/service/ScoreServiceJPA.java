@@ -14,7 +14,29 @@ public class ScoreServiceJPA implements ScoreService {
 
     @Override
     public void addScore(Score score) throws ScoreException {
-        entityManager.persist(score);
+        try {
+            // Проверяем, есть ли уже запись для игрока в этой игре
+            List<Score> existingScores = entityManager.createQuery(
+                    "SELECT s FROM Score s WHERE s.game = :game AND s.player = :player", Score.class)
+                    .setParameter("game", score.getGame())
+                    .setParameter("player", score.getPlayer())
+                    .getResultList();
+
+            if (!existingScores.isEmpty()) {
+                Score existingScore = existingScores.get(0);
+                // Сравниваем старый результат с новым
+                if (score.getPoints() > existingScore.getPoints()) {
+                    existingScore.setPoints(score.getPoints());
+                    existingScore.setPlayedOn(score.getPlayedOn());
+                    entityManager.merge(existingScore);
+                }
+            } else {
+                // Если записи нет, создаем новую
+                entityManager.persist(score);
+            }
+        } catch (Exception e) {
+            throw new ScoreException("Problem adding score via JPA", e);
+        }
     }
 
     @Override

@@ -16,15 +16,40 @@ public class ScoreServiceJDBC implements ScoreService {
 
     @Override
     public void addScore(Score score) {
+        String checkQuery = "SELECT points FROM score WHERE game = ? AND player = ?";
+        String updateQuery = "UPDATE score SET points = ?, played_on = ? WHERE game = ? AND player = ?";
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(INSERT)) {
-            statement.setString(1, score.getGame());
-            statement.setString(2, score.getPlayer());
-            statement.setInt(3, score.getPoints());
-            statement.setTimestamp(4, new Timestamp(score.getPlayedOn().getTime()));
-            statement.executeUpdate();
+             PreparedStatement checkStatement = connection.prepareStatement(checkQuery)) {
+
+            // Проверяем, есть ли уже запись для игрока в данной игре
+            checkStatement.setString(1, score.getGame());
+            checkStatement.setString(2, score.getPlayer());
+            ResultSet rs = checkStatement.executeQuery();
+
+            if (rs.next()) { // Если запись существует
+                int currentPoints = rs.getInt("points");
+                if (score.getPoints() > currentPoints) {
+                    // Обновляем запись, если новый рекорд больше
+                    try (PreparedStatement updateStatement = connection.prepareStatement(updateQuery)) {
+                        updateStatement.setInt(1, score.getPoints());
+                        updateStatement.setTimestamp(2, new Timestamp(score.getPlayedOn().getTime()));
+                        updateStatement.setString(3, score.getGame());
+                        updateStatement.setString(4, score.getPlayer());
+                        updateStatement.executeUpdate();
+                    }
+                }
+            } else {
+                // Если записи нет, добавляем новую
+                try (PreparedStatement insertStatement = connection.prepareStatement(INSERT)) {
+                    insertStatement.setString(1, score.getGame());
+                    insertStatement.setString(2, score.getPlayer());
+                    insertStatement.setInt(3, score.getPoints());
+                    insertStatement.setTimestamp(4, new Timestamp(score.getPlayedOn().getTime()));
+                    insertStatement.executeUpdate();
+                }
+            }
         } catch (SQLException e) {
-            throw new ScoreException("Problem inserting score", e);
+            throw new ScoreException("Problem adding score", e);
         }
     }
 

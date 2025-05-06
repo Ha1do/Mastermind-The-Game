@@ -20,7 +20,23 @@ public class ScoreServiceRest {
     }
 
     @PostMapping
-    public void addScore(@RequestBody Score score) {
+public void addScore(@RequestBody Score score) {
+    List<Score> existingScores = scoreService.getTopScores(score.getGame());
+
+    // Проверяем, есть ли рекорд игрока
+    Score existingScore = existingScores.stream()
+            .filter(s -> s.getPlayer().equals(score.getPlayer()))
+            .findFirst()
+            .orElse(null);
+
+    if (existingScore != null) {
+        // Обновляем, если новый результат выше
+        if (score.getPoints() > existingScore.getPoints()) {
+            scoreService.addScore(score); // Используем существующий метод для обновления
+        }
+    } else {
+        // Если записи игрока нет, добавляем
         scoreService.addScore(score);
     }
+}
 }

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Мастермайнд</title>
+</head>
+<body>
+<h1>Игра "Мастермайнд"</h1>
+
+<form action="/guess" method="post">
+    <label for="code">Введите код:</label>
+    <input type="text" id="code" name="code" maxlength="4" required>
+    <button type="submit">Отправить</button>
+</form>
+
+<h2>Попытки:</h2>
+<ul>
+    <li th:each="attempt : ${attempts}" th:text="${attempt}"></li>
+</ul>
+
+<p th:if="${message}" th:text="${message}" style="color: green;"></p>
+</body>
+</html>
