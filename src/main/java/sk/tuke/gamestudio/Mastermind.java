@@ -3,7 +3,7 @@ package sk.tuke.gamestudio;
 import sk.tuke.gamestudio.game.mastermind.consoleui.ConsoleUI;
 import sk.tuke.gamestudio.game.mastermind.core.CodeGenerator;
 import sk.tuke.gamestudio.game.mastermind.core.Game;
-import sk.tuke.gamestudio.game.mastermind.core.User;
+import sk.tuke.gamestudio.entity.User;
 import sk.tuke.gamestudio.entity.Comment;
 import sk.tuke.gamestudio.entity.Rating;
 import sk.tuke.gamestudio.entity.Score;
@@ -23,7 +23,7 @@ public class Mastermind
         Date d = new Date();
         ConsoleUI ui = new ConsoleUI(scoreService, commentService, ratingService);
         ui.Welcome();
-        User user = new User();
+        User user = new User("", "", "");
         ui.AskForName(user);
 
         ui.seeComsRatsScores(scoreService, commentService, ratingService);

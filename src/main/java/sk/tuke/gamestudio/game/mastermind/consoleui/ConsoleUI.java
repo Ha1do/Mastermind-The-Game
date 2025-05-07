@@ -1,7 +1,7 @@
 package sk.tuke.gamestudio.game.mastermind.consoleui;
 
 import org.springframework.stereotype.Component;
-import sk.tuke.gamestudio.game.mastermind.core.User;
+import sk.tuke.gamestudio.entity.User;
 import sk.tuke.gamestudio.entity.Comment;
 import sk.tuke.gamestudio.entity.Rating;
 import sk.tuke.gamestudio.entity.Score;

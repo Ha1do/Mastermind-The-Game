@@ -1,6 +1,6 @@
+import sk.tuke.gamestudio.entity.User;
 import sk.tuke.gamestudio.game.mastermind.core.Game;
 import sk.tuke.gamestudio.game.mastermind.consoleui.ConsoleUI;
-import sk.tuke.gamestudio.game.mastermind.core.User;
 import org.junit.jupiter.api.Test;
 import sk.tuke.gamestudio.service.CommentServiceJDBC;
 import sk.tuke.gamestudio.service.RatingServiceJDBC;
@@ -16,7 +16,7 @@ public class GameTest {
         ScoreServiceJDBC scoreService = new ScoreServiceJDBC();
         CommentServiceJDBC commentService = new CommentServiceJDBC();
         RatingServiceJDBC ratingService = new RatingServiceJDBC();
-        Game game = new Game(secretCode, new User(), new ConsoleUI(scoreService, commentService, ratingService));
+        Game game = new Game(secretCode, new User("Harold", "harold@gmail.com", "123"), new ConsoleUI(scoreService, commentService, ratingService));
         int[] guess = {2, 2, 1, 2};
         game.checkGuess(guess);
         assertTrue(game.isGuessed());
@@ -28,7 +28,7 @@ public class GameTest {
         ScoreServiceJDBC scoreService = new ScoreServiceJDBC();
         CommentServiceJDBC commentService = new CommentServiceJDBC();
         RatingServiceJDBC ratingService = new RatingServiceJDBC();
-        Game game = new Game(secretCode, new User(), new ConsoleUI(scoreService, commentService, ratingService));
+        Game game = new Game(secretCode, new User("Harold", "harold@gmail.com", "123"), new ConsoleUI(scoreService, commentService, ratingService));
         int[] guess = {2, 2, 1, 3};
         game.checkGuess(guess);
         assertFalse(game.isGuessed());
@@ -40,7 +40,7 @@ public class GameTest {
         ScoreServiceJDBC scoreService = new ScoreServiceJDBC();
         CommentServiceJDBC commentService = new CommentServiceJDBC();
         RatingServiceJDBC ratingService = new RatingServiceJDBC();
-        Game game = new Game(secretCode, new User(), new ConsoleUI(scoreService, commentService, ratingService));
+        Game game = new Game(secretCode, new User("Harold", "harold@gmail.com", "123"), new ConsoleUI(scoreService, commentService, ratingService));
         int[] guess1 = {2, 2, 1, 3};
         int[] guess2 = {2, 2, 1, 2};
         game.checkGuess(guess1);
@@ -54,7 +54,7 @@ public class GameTest {
         ScoreServiceJDBC scoreService = new ScoreServiceJDBC();
         CommentServiceJDBC commentService = new CommentServiceJDBC();
         RatingServiceJDBC ratingService = new RatingServiceJDBC();
-        Game game = new Game(secretCode, new User(), new ConsoleUI(scoreService, commentService, ratingService));
+        Game game = new Game(secretCode, new User("Harold", "harold@gmail.com", "123"), new ConsoleUI(scoreService, commentService, ratingService));
         int[] guess = {2, 1, 2, 2};
         game.checkGuess(guess);
         assertFalse(game.isGuessed());
@@ -66,7 +66,7 @@ public class GameTest {
         ScoreServiceJDBC scoreService = new ScoreServiceJDBC();
         CommentServiceJDBC commentService = new CommentServiceJDBC();
         RatingServiceJDBC ratingService = new RatingServiceJDBC();
-        Game game = new Game(secretCode, new User(), new ConsoleUI(scoreService, commentService, ratingService));
+        Game game = new Game(secretCode, new User("Harold", "harold@gmail.com", "123"), new ConsoleUI(scoreService, commentService, ratingService));
         int[] guess = {3, 3, 3, 3};
         game.checkGuess(guess);
         assertFalse(game.isGuessed());
@@ -78,7 +78,7 @@ public class GameTest {
         ScoreServiceJDBC scoreService = new ScoreServiceJDBC();
         CommentServiceJDBC commentService = new CommentServiceJDBC();
         RatingServiceJDBC ratingService = new RatingServiceJDBC();
-        Game game = new Game(secretCode, new User(), new ConsoleUI(scoreService, commentService, ratingService));
+        Game game = new Game(secretCode, new User("Harold", "harold@gmail.com", "123"), new ConsoleUI(scoreService, commentService, ratingService));
         int[] guess = {1, 2, 2, 2};
         game.checkGuess(guess);
         assertFalse(game.isGuessed());
@@ -90,7 +90,7 @@ public class GameTest {
         ScoreServiceJDBC scoreService = new ScoreServiceJDBC();
         CommentServiceJDBC commentService = new CommentServiceJDBC();
         RatingServiceJDBC ratingService = new RatingServiceJDBC();
-        Game game = new Game(secretCode, new User(), new ConsoleUI(scoreService, commentService, ratingService));
+        Game game = new Game(secretCode, new User("Harold", "harold@gmail.com", "123"), new ConsoleUI(scoreService, commentService, ratingService));
         int[] guess = {2, 3, 1, 4};
         game.checkGuess(guess);
         assertFalse(game.isGuessed());
@@ -102,7 +102,7 @@ public class GameTest {
         ScoreServiceJDBC scoreService = new ScoreServiceJDBC();
         CommentServiceJDBC commentService = new CommentServiceJDBC();
         RatingServiceJDBC ratingService = new RatingServiceJDBC();
-        Game game = new Game(secretCode, new User(), new ConsoleUI(scoreService, commentService, ratingService));
+        Game game = new Game(secretCode, new User("Harold", "harold@gmail.com", "123"), new ConsoleUI(scoreService, commentService, ratingService));
         int[] guess = {2, 2, 2, 2};
         game.checkGuess(guess);
         assertFalse(game.isGuessed());
@@ -114,7 +114,7 @@ public class GameTest {
         ScoreServiceJDBC scoreService = new ScoreServiceJDBC();
         CommentServiceJDBC commentService = new CommentServiceJDBC();
         RatingServiceJDBC ratingService = new RatingServiceJDBC();
-        Game game = new Game(secretCode, new User(), new ConsoleUI(scoreService, commentService, ratingService));
+        Game game = new Game(secretCode, new User("Harold", "harold@gmail.com", "123"), new ConsoleUI(scoreService, commentService, ratingService));
         int[] guess = {2, 2, 2, 2};
         game.checkGuess(guess);
         assertTrue(game.isGuessed());
@@ -126,7 +126,7 @@ public class GameTest {
         ScoreServiceJDBC scoreService = new ScoreServiceJDBC();
         CommentServiceJDBC commentService = new CommentServiceJDBC();
         RatingServiceJDBC ratingService = new RatingServiceJDBC();
-        Game game = new Game(secretCode, new User(), new ConsoleUI(scoreService, commentService, ratingService));
+        Game game = new Game(secretCode, new User("Harold", "harold@gmail.com", "123"), new ConsoleUI(scoreService, commentService, ratingService));
         int[] guess = {2};
         game.checkGuess(guess);
         assertTrue(game.isGuessed());
@@ -138,7 +138,7 @@ public class GameTest {
         ScoreServiceJDBC scoreService = new ScoreServiceJDBC();
         CommentServiceJDBC commentService = new CommentServiceJDBC();
         RatingServiceJDBC ratingService = new RatingServiceJDBC();
-        Game game = new Game(secretCode, new User(), new ConsoleUI(scoreService, commentService, ratingService));
+        Game game = new Game(secretCode, new User("Harold", "harold@gmail.com", "123"), new ConsoleUI(scoreService, commentService, ratingService));
         int[] guess = {3};
         game.checkGuess(guess);
         assertFalse(game.isGuessed());

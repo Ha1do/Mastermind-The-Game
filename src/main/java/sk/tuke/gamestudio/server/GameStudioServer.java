@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
+@EntityScan(basePackages = "sk.tuke.gamestudio.entity")
 @ComponentScan(basePackages = "sk.tuke.gamestudio")
 public class GameStudioServer {
     private static final Logger logger = LoggerFactory.getLogger(GameStudioServer.class);

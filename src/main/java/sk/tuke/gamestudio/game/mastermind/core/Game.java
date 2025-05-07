@@ -1,6 +1,7 @@
 package sk.tuke.gamestudio.game.mastermind.core;
 
 import sk.tuke.gamestudio.game.mastermind.consoleui.ConsoleUI;
+import sk.tuke.gamestudio.entity.User;
 
 import java.util.Arrays;
 

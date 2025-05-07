@@ -1,14 +1,18 @@
 package sk.tuke.gamestudio.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import sk.tuke.gamestudio.entity.Score;
+import sk.tuke.gamestudio.entity.User;
 import sk.tuke.gamestudio.game.mastermind.core.CodeGenerator;
 import sk.tuke.gamestudio.game.mastermind.core.Game;
-import sk.tuke.gamestudio.game.mastermind.core.User;
+import sk.tuke.gamestudio.service.ScoreService;
 
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -17,33 +21,35 @@ public class GameController {
     private static final int CODE_LENGTH = 4;
     private final CodeGenerator codeGenerator;
     private Game game;
-    private final User user;
     private final List<String> history;
 
-    @GetMapping("/test")
-    @ResponseBody
-    public String testRoute() {
-        return "Контроллер работает!";
-    }
+    @Autowired
+    private ScoreService scoreService;
 
     public GameController() {
         this.codeGenerator = new CodeGenerator(CODE_LENGTH);
-        this.user = new User();
         this.history = new ArrayList<>();
-        initGame();
-    }
-
-    private void initGame() {
-        user.setName("Player");
-        this.game = new Game(codeGenerator.generateSecretCode(), user,
-           null);
     }
 
     @GetMapping
-    public String showGamePage(Model model) {
+    public String showGamePage(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("loggedUser");
+
+        // Если пользователь не авторизован, создаём гостевого пользователя
+        if (user == null) {
+            user = new User("Guest", "guest@example.com", "");
+            session.setAttribute("loggedUser", user); // Устанавливаем гостя в сессию
+        }
+
+        // Если игра ещё не инициализирована, создаём игру для пользователя
+        if (game == null) {
+            initGame(user);
+        }
+
         model.addAttribute("history", history);
         model.addAttribute("guessed", game.isGuessed());
         model.addAttribute("attempts", game.getAttempts());
+        model.addAttribute("isGuest", user.getName().equals("Guest")); // Проверка, является ли пользователь гостем
         return "game";
     }
 
@@ -52,7 +58,16 @@ public class GameController {
                            @RequestParam("guess1") int guess1,
                            @RequestParam("guess2") int guess2,
                            @RequestParam("guess3") int guess3,
+                           HttpSession session,
                            Model model) {
+        User user = (User) session.getAttribute("loggedUser");
+
+        // Если пользователь не авторизован (гостевой режим), создаём гостя
+        if (user == null) {
+            user = new User("Guest", "guest@example.com", "");
+            session.setAttribute("loggedUser", user);
+        }
+
         int[] guess = {guess0, guess1, guess2, guess3};
         char[] feedback = game.checkGuessAndReturnFeedback(guess);
 
@@ -74,10 +89,25 @@ public class GameController {
         model.addAttribute("history", history);
         model.addAttribute("guessed", game.isGuessed());
         model.addAttribute("attempts", game.getAttempts());
+        model.addAttribute("isGuest", user.getName().equals("Guest")); // Проверка, является ли пользователь гостем
+
         if (game.isGuessed()) {
             model.addAttribute("score", user.getScore());
+
+            // Если пользователь не гость, сохраняем его результат
+            if (!user.getName().equals("Guest")) {
+                Score score = new Score("Mastermind", user.getName(), user.getScore(), new Date());
+                scoreService.addScore(score);
+            }
+
+            // Обнуляем игру
+            game = null;
         }
 
         return "game";
+    }
+
+    private void initGame(User user) {
+        this.game = new Game(codeGenerator.generateSecretCode(), user, null);
     }
 }
