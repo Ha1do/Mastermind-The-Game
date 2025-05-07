@@ -61,5 +61,16 @@
         </div>
     </div>
 </div>
+
+<div class="comments-container">
+    <h2 class="text-lg font-bold mb-2">💬 Комментарии</h2>
+    <div class="comments-box">
+        <ul id="comments-list">
+            <li th:each="comment : ${comments}" class="comment-item" th:text="${comment.text}"></li>
+        </ul>
+    </div>
+</div>
+
+
 </body>
 </html>
