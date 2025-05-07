@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import sk.tuke.gamestudio.entity.Comment;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.entity.User;
 import sk.tuke.gamestudio.game.mastermind.core.CodeGenerator;
 import sk.tuke.gamestudio.game.mastermind.core.Game;
+import sk.tuke.gamestudio.service.CommentService;
 import sk.tuke.gamestudio.service.ScoreService;
 
 import jakarta.servlet.http.HttpSession;
@@ -25,6 +27,9 @@ public class GameController {
 
     @Autowired
     private ScoreService scoreService;
+
+    @Autowired
+    private CommentService commentService;
 
     public GameController() {
         this.codeGenerator = new CodeGenerator(CODE_LENGTH);
@@ -46,10 +51,14 @@ public class GameController {
             initGame(user);
         }
 
+        List<Comment> comments = commentService.getComments("Mastermind");
+        model.addAttribute("comments", comments);
+
         model.addAttribute("history", history);
         model.addAttribute("guessed", game.isGuessed());
         model.addAttribute("attempts", game.getAttempts());
-        model.addAttribute("isGuest", user.getName().equals("Guest")); // Проверка, является ли пользователь гостем
+        model.addAttribute("isGuest", user.getName().equals("Guest"));
+        model.addAttribute("user", user);
         return "game";
     }
 
@@ -85,6 +94,9 @@ public class GameController {
         String entry = String.format("%d %d %d %d → %s", guess0, guess1, guess2, guess3, feedbackHtml);
         history.add(entry);
 
+        List<Comment> comments = commentService.getComments("Mastermind");
+        model.addAttribute("comments", comments);
+
         // Передаём историю и состояние игры в модель
         model.addAttribute("history", history);
         model.addAttribute("guessed", game.isGuessed());
@@ -105,6 +117,19 @@ public class GameController {
         }
 
         return "game";
+    }
+
+    @PostMapping("/comment")
+    public String addComment(@RequestParam("comment") String commentText, HttpSession session) {
+        User user = (User) session.getAttribute("loggedUser");
+
+        // Комментарии могут оставлять только зарегистрированные пользователи
+        if (user != null && !user.getName().equals("Guest")) {
+            Comment comment = new Comment(commentText, user.getName(), new Date(), "Mastermind");
+            commentService.addComment(comment);
+        }
+
+        return "redirect:/mastermind";
     }
 
     private void initGame(User user) {
