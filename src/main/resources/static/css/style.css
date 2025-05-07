@@ -38,15 +38,18 @@
 
 .comments-container {
     position: fixed;
-    bottom: 20px;
+    bottom: 80px; /* Подняли блок выше */
     right: 20px;
     width: 300px;
-    height: 200px;
+    max-height: 250px; /* Ограничили высоту */
     background: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
     padding: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 2;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .comments-box {
@@ -56,8 +59,17 @@
     padding-top: 5px;
 }
 
+.comment-input {
+    margin-top: auto;
+}
+
 .comment-item {
     font-size: 14px;
     padding: 5px;
     border-bottom: 1px solid #ddd;
+}
+
+.register-button, .send-button {
+    margin-top: 5px;
+    width: 100%; /* Кнопка на всю ширину */
 }

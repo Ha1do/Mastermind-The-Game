@@ -53,14 +53,14 @@
         </ul>
     </div>
 
-    <div th:if="${isGuest}">
-        <a href="/auth" class="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-4 rounded mt-2 inline-block">Зарегистрироваться</a>
+    <div th:if="${isGuest}" class="comment-input">
+        <a href="/auth" class="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-4 rounded register-button">Зарегистрироваться</a>
     </div>
 
-    <div th:if="${!isGuest}">
+    <div th:if="${!isGuest}" class="comment-input">
         <form th:action="@{/mastermind/comment}" method="post" class="mt-2">
             <input type="text" name="comment" placeholder="Ваш комментарий..." class="border rounded px-2 py-1 w-full" required>
-            <button type="submit" class="bg-green-500 hover:bg-green-600 text-white py-1 px-4 rounded mt-1">Отправить</button>
+            <button type="submit" class="bg-green-500 hover:bg-green-600 text-white py-1 px-4 rounded send-button">Отправить</button>
         </form>
     </div>
 </div>
