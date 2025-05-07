@@ -55,9 +55,22 @@ public class GameController {
                            Model model) {
         int[] guess = {guess0, guess1, guess2, guess3};
         char[] feedback = game.checkGuessAndReturnFeedback(guess);
-        String entry = String.format("%d %d %d %d → %s", guess0, guess1, guess2, guess3, new String(feedback));
+
+        // Преобразуем каждый символ обратной связи (G, Y, N) в HTML элемент с цветным кружком
+        StringBuilder feedbackHtml = new StringBuilder();
+        for (char fb : feedback) {
+            switch (fb) {
+                case 'G' -> feedbackHtml.append("<span class='feedback-circle green'></span>");
+                case 'Y' -> feedbackHtml.append("<span class='feedback-circle yellow'></span>");
+                case 'N' -> feedbackHtml.append("<span class='feedback-circle red'></span>");
+            }
+        }
+
+        // Добавляем новый элемент истории
+        String entry = String.format("%d %d %d %d → %s", guess0, guess1, guess2, guess3, feedbackHtml);
         history.add(entry);
 
+        // Передаём историю и состояние игры в модель
         model.addAttribute("history", history);
         model.addAttribute("guessed", game.isGuessed());
         model.addAttribute("attempts", game.getAttempts());

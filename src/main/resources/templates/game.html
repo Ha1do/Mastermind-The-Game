@@ -4,6 +4,25 @@
     <meta charset="UTF-8">
     <title>Mastermind</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Стили для цветных кружков */
+        .feedback-circle {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            margin-left: 5px;
+            border-radius: 50%;
+        }
+        .green {
+            background-color: #38a169; /* Зелёный */
+        }
+        .yellow {
+            background-color: #ecc94b; /* Жёлтый */
+        }
+        .red {
+            background-color: #e53e3e; /* Красный */
+        }
+    </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
 <div class="bg-white p-6 rounded shadow-lg w-full max-w-md">
@@ -22,7 +41,7 @@
     <div class="mt-4">
         <h2 class="font-semibold">История ходов:</h2>
         <ul class="list-disc ml-5 mt-2">
-            <li th:each="entry : ${history}" th:text="${entry}">Пример: 1 2 3 4 → G Y N N</li>
+            <li th:each="entry : ${history}" th:utext="${entry}">Пример: 1 2 3 4 → <span class="feedback-circle green"></span></li>
         </ul>
     </div>
 
