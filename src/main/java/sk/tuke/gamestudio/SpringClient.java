@@ -11,10 +11,10 @@
 //import org.springframework.context.annotation.Configuration;
 //import org.springframework.context.annotation.FilterType;
 //import org.springframework.web.client.RestTemplate;
+//import sk.tuke.gamestudio.entity.User;
 //import sk.tuke.gamestudio.game.mastermind.consoleui.ConsoleUI;
 //import sk.tuke.gamestudio.game.mastermind.core.CodeGenerator;
 //import sk.tuke.gamestudio.game.mastermind.core.Game;
-//import sk.tuke.gamestudio.game.mastermind.core.User;
 //import sk.tuke.gamestudio.entity.Score;
 //import sk.tuke.gamestudio.service.*;
 //

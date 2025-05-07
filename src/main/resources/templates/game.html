@@ -2,8 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mastermind</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link th:href="@{static/css/style.css}" rel="stylesheet">
     <style>
         /* Стили для цветных кружков */
         .feedback-circle {
@@ -25,28 +27,38 @@
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
-<div class="bg-white p-6 rounded shadow-lg w-full max-w-md">
-    <h1 class="text-2xl font-bold mb-4 text-center">🎯 Mastermind</h1>
 
-    <form th:action="@{/mastermind/play}" method="post" class="flex flex-col space-y-2">
-        <div class="grid grid-cols-4 gap-2">
-            <input type="number" min="0" max="9" name="guess0" class="border rounded px-2 py-1 text-center" required>
-            <input type="number" min="0" max="9" name="guess1" class="border rounded px-2 py-1 text-center" required>
-            <input type="number" min="0" max="9" name="guess2" class="border rounded px-2 py-1 text-center" required>
-            <input type="number" min="0" max="9" name="guess3" class="border rounded px-2 py-1 text-center" required>
+<div class="video-container">
+    <video class="video-background" autoplay loop muted playsinline>
+        <source th:src="@{/static/materials/mylivewallpapers.com-Neon-Sunset.mp4}" type="video/mp4">
+        Ваш браузер не поддерживает видео.
+    </video>
+</div>
+
+<div class="content">
+    <div class="bg-white p-6 rounded shadow-lg w-full max-w-md">
+        <h1 class="text-2xl font-bold mb-4 text-center">🎯 Mastermind</h1>
+
+        <form th:action="@{/mastermind/play}" method="post" class="flex flex-col space-y-2">
+            <div class="grid grid-cols-4 gap-2">
+                <input type="number" min="0" max="9" name="guess0" class="border rounded px-2 py-1 text-center" required>
+                <input type="number" min="0" max="9" name="guess1" class="border rounded px-2 py-1 text-center" required>
+                <input type="number" min="0" max="9" name="guess2" class="border rounded px-2 py-1 text-center" required>
+                <input type="number" min="0" max="9" name="guess3" class="border rounded px-2 py-1 text-center" required>
+            </div>
+            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 rounded">Проверить</button>
+        </form>
+
+        <div class="mt-4">
+            <h2 class="font-semibold">История ходов:</h2>
+            <ul class="list-disc ml-5 mt-2">
+                <li th:each="entry : ${history}" th:utext="${entry}">Пример: 1 2 3 4 → <span class="feedback-circle green"></span></li>
+            </ul>
         </div>
-        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 rounded">Проверить</button>
-    </form>
 
-    <div class="mt-4">
-        <h2 class="font-semibold">История ходов:</h2>
-        <ul class="list-disc ml-5 mt-2">
-            <li th:each="entry : ${history}" th:utext="${entry}">Пример: 1 2 3 4 → <span class="feedback-circle green"></span></li>
-        </ul>
-    </div>
-
-    <div class="mt-4 text-center text-green-600 font-bold" th:if="${guessed}">
-        🎉 Вы угадали код за [[${attempts}]] попыток!
+        <div class="mt-4 text-center text-green-600 font-bold" th:if="${guessed}">
+            🎉 Вы угадали код за [[${attempts}]] попыток!
+        </div>
     </div>
 </div>
 </body>
