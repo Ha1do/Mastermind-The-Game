@@ -199,6 +199,11 @@ public class GameController {
         return "redirect:/mastermind";
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/auth";
+    }
 
     private void initGame(User user) {
         this.game = new Game(codeGenerator.generateSecretCode(), user, null);
