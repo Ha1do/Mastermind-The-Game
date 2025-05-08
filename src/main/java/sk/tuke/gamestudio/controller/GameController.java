@@ -63,8 +63,8 @@ public class GameController {
             game = new Game(codeGenerator.generateSecretCode(), user, null);
             session.setAttribute("game", game);
         }
-        history = new ArrayList<>();
-        session.setAttribute("history", history);
+//        history = new ArrayList<>();
+//        session.setAttribute("history", history);
 
         @SuppressWarnings("unchecked")
         List<String> sessionHistory = (List<String>) session.getAttribute("history");
