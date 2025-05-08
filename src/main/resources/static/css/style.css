@@ -155,6 +155,44 @@
 }
 
 /* rating */
+
+/* Замените старые стили рейтинга на эти */
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 0.25rem;
+}
+
+.star {
+    font-size: 2rem;
+    color: #D1D5DB;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+/* Стиль для активной звезды и всех предыдущих */
+.star-rating input:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: #EAB308; /* Жёлтый цвет для заполненных звёзд */
+    content: "★";
+}
+
+/* Эффект при наведении */
+.star:hover {
+    transform: scale(1.1);
+}
+
+.star-rating input:checked ~ label::before,
+.star-rating label:hover::before,
+.star-rating label:hover ~ label::before {
+    content: "★";
+}
+
+.star::before {
+    content: "☆";
+}
+
 .rating-container {
     position: fixed;
     bottom: 290px; /* Располагаем над блоком комментариев */
@@ -164,16 +202,16 @@
     background: rgba(255, 255, 255, 0.9);
 }
 
-.peer:checked + label {
-    color: #EAB308; /* yellow-500 */
-}
+/*.peer:checked + label {*/
+/*    color: #EAB308; !* yellow-500 *!*/
+/*}*/
 
-label[for^="star"] {
-    color: #D1D5DB; /* gray-300 */
-    transition: color 0.2s;
-}
+/*label[for^="star"] {*/
+/*    color: #D1D5DB; !* gray-300 *!*/
+/*    transition: color 0.2s;*/
+/*}*/
 
-label[for^="star"]:hover,
-label[for^="star"]:hover ~ label {
-    color: #EAB308; /* yellow-500 */
-}
+/*label[for^="star"]:hover,*/
+/*label[for^="star"]:hover ~ label {*/
+/*    color: #EAB308; !* yellow-500 *!*/
+/*}*/
