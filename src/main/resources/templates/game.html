@@ -41,7 +41,24 @@
     </div>
 </div>
 
-<div class="comments-container">
+<div th:if="${isGuest}" class="comments-container comments-guest">
+    <h2 class="text-lg font-bold mb-2">💬 Комментарии</h2>
+    <div class="comments-box">
+        <ul id="comments-list">
+            <li th:each="comment : ${comments}" class="comment-item">
+                <span th:text="${comment.player}"></span>:
+                <span th:text="${comment.comment}"></span>
+                <span class="text-gray-500 text-xs" th:text="${#dates.format(comment.commentedOn, 'dd.MM.yyyy HH:mm')}"></span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div th:if="${isGuest}" class="register-container">
+    <a href="/auth" class="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-4 rounded register-button">Зарегистрироваться</a>
+</div>
+
+<div th:if="${!isGuest}" class="comments-container comments-registered">
     <h2 class="text-lg font-bold mb-2">💬 Комментарии</h2>
     <div class="comments-box">
         <ul id="comments-list">
@@ -53,11 +70,7 @@
         </ul>
     </div>
 
-    <div th:if="${isGuest}" class="comment-input">
-        <a href="/auth" class="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-4 rounded register-button">Зарегистрироваться</a>
-    </div>
-
-    <div th:if="${!isGuest}" class="comment-input">
+    <div class="comment-input">
         <form th:action="@{/mastermind/comment}" method="post" class="mt-2">
             <input type="text" name="comment" placeholder="Ваш комментарий..." class="border rounded px-2 py-1 w-full" required>
             <button type="submit" class="bg-green-500 hover:bg-green-600 text-white py-1 px-4 rounded send-button">Отправить</button>

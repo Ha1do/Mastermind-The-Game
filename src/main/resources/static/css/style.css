@@ -38,10 +38,9 @@
 
 .comments-container {
     position: fixed;
-    bottom: 80px; /* Подняли блок выше */
     right: 20px;
     width: 300px;
-    max-height: 250px; /* Ограничили высоту */
+    max-height: 250px;
     background: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
     padding: 10px;
@@ -71,5 +70,26 @@
 
 .register-button, .send-button {
     margin-top: 5px;
-    width: 100%; /* Кнопка на всю ширину */
+    width: 100%;
+}
+
+/* Комментарии для зарегистрированного пользователя (чуть ниже) */
+.comments-registered {
+    bottom: 20px;
+}
+
+/* Кнопка регистрации для гостя (внизу страницы) */
+.register-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.comments-guest {
+    bottom: 80px;
 }
