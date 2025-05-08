@@ -5,6 +5,7 @@
     <title>Mastermind</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="/static/css/style.css" rel="stylesheet">
+    <script src="/static/js/dragAndDrop.js"></script>
 </head>
 
 
@@ -53,18 +54,48 @@
         <div class="bg-white p-6 rounded shadow-lg w-full max-w-md relative z-10 flex flex-col items-center">
             <h1 class="text-2xl font-bold mb-4 text-center">🎯 Mastermind</h1>
 
-            <!-- Форма для активной игры -->
-            <div th:if="${!guessed}" class="flex flex-col space-y-2">
-                <form th:action="@{/mastermind/play}" method="post" class="flex flex-col space-y-2">
-                    <div class="grid grid-cols-4 gap-2">
-                        <input type="number" min="0" max="9" name="guess0" class="border rounded px-2 py-1 text-center" required>
-                        <input type="number" min="0" max="9" name="guess1" class="border rounded px-2 py-1 text-center" required>
-                        <input type="number" min="0" max="9" name="guess2" class="border rounded px-2 py-1 text-center" required>
-                        <input type="number" min="0" max="9" name="guess3" class="border rounded px-2 py-1 text-center" required>
+            <!-- Заменяем числовые input'ы на поле для игры с кружочками -->
+            <div th:if="${!guessed}" class="flex flex-col space-y-4 items-center">
+                <form th:action="@{/mastermind/play}" method="post" id="gameForm">
+                    <!-- Скрытые поля для отправки значений -->
+                    <input type="hidden" name="guess0" id="guess0">
+                    <input type="hidden" name="guess1" id="guess1">
+                    <input type="hidden" name="guess2" id="guess2">
+                    <input type="hidden" name="guess3" id="guess3">
+
+                    <!-- Палитра цветов -->
+                    <div class="color-palette p-4 bg-gray-100 rounded-lg mb-4">
+                        <h3 class="text-center mb-2 font-bold">Доступные цвета</h3>
+                        <div class="grid grid-cols-5 gap-4">
+                            <div class="color-circle" draggable="true" data-color="0" style="background-color: #DC2626"></div>
+                            <div class="color-circle" draggable="true" data-color="1" style="background-color: #2563EB"></div>
+                            <div class="color-circle" draggable="true" data-color="2" style="background-color: #059669"></div>
+                            <div class="color-circle" draggable="true" data-color="3" style="background-color: #FBBF24"></div>
+                            <div class="color-circle" draggable="true" data-color="4" style="background-color: #7C3AED"></div>
+                            <div class="color-circle" draggable="true" data-color="5" style="background-color: #DB2777"></div>
+                            <div class="color-circle" draggable="true" data-color="6" style="background-color: #FF7F50"></div>
+                            <div class="color-circle" draggable="true" data-color="7" style="background-color: #B45309"></div>
+                            <div class="color-circle" draggable="true" data-color="8" style="background-color: #00FF00"></div>
+                            <div class="color-circle" draggable="true" data-color="9" style="background-color: #111827"></div>
+                        </div>
                     </div>
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 rounded">Проверить</button>
+
+                    <!-- Лунки для размещения кружочков -->
+                    <div class="slots-container p-4 bg-gray-100 rounded-lg">
+                        <div class="grid grid-cols-4 gap-4">
+                            <div class="slot" data-slot="0"></div>
+                            <div class="slot" data-slot="1"></div>
+                            <div class="slot" data-slot="2"></div>
+                            <div class="slot" data-slot="3"></div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-6 rounded mt-4 w-full">
+                        Проверить
+                    </button>
                 </form>
             </div>
+
 
             <!-- Кнопка "Играть снова" после победы -->
             <div th:if="${guessed}" class="flex flex-col items-center space-y-4">
@@ -80,9 +111,9 @@
 
             <div class="mt-4">
                 <h2 class="font-semibold">История ходов:</h2>
-                <ul class="list-disc ml-5 mt-2">
-                    <li th:each="entry : ${history}" th:utext="${entry}">Пример: 1 2 3 4 → <span class="feedback-circle green"></span></li>
-                </ul>
+                <div class="history-container">
+                    <div th:each="entry : ${history}" class="history-item" th:utext="${entry}"></div>
+                </div>
             </div>
 
             <div class="mt-4 text-center text-green-600 font-bold" th:if="${guessed}">

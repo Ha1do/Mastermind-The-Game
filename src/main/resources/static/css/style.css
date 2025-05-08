@@ -15,7 +15,7 @@
     object-fit: cover;
 }
 
-/* Стили для цветных кружков */
+/* feedback*/
 .feedback-circle {
     display: inline-block;
     width: 16px;
@@ -35,6 +35,33 @@
 .red {
     background-color: #e53e3e; /* Красный */
 }
+/* feedback */
+
+/* guess colors */
+.history-container {
+    max-height: 200px;
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-top: 10px;
+}
+
+.history-circle {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    margin: 0 3px;
+    vertical-align: middle;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.history-item {
+    margin: 8px 0;
+    display: flex;
+    align-items: center;
+}
+
+/* guess colors */
 
 .comments-container {
     position: fixed;
@@ -202,16 +229,42 @@
     background: rgba(255, 255, 255, 0.9);
 }
 
-/*.peer:checked + label {*/
-/*    color: #EAB308; !* yellow-500 *!*/
-/*}*/
 
-/*label[for^="star"] {*/
-/*    color: #D1D5DB; !* gray-300 *!*/
-/*    transition: color 0.2s;*/
-/*}*/
+/* Стили для цветных кружочков и слотов */
+.color-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: grab;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-/*label[for^="star"]:hover,*/
-/*label[for^="star"]:hover ~ label {*/
-/*    color: #EAB308; !* yellow-500 *!*/
-/*}*/
+.color-circle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.color-circle:active {
+    cursor: grabbing;
+}
+
+.slot {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px dashed #ccc;
+    background: rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+}
+
+.slot.drag-over {
+    border-style: solid;
+    border-color: #3B82F6;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.slot.filled {
+    border-style: solid;
+    border-color: transparent;
+}

@@ -66,14 +66,14 @@ public class GameController {
         history = new ArrayList<>();
         session.setAttribute("history", history);
 
-
-//        // Получаем историю из сессии
-//        @SuppressWarnings("unchecked")
-//        List<String> sessionHistory = (List<String>) session.getAttribute("history");
-//        if (sessionHistory != null) {
-//            history.clear();
-//            history.addAll(sessionHistory);
-//        }
+        @SuppressWarnings("unchecked")
+        List<String> sessionHistory = (List<String>) session.getAttribute("history");
+        if (sessionHistory != null) {
+            history = sessionHistory;
+        } else {
+            history = new ArrayList<>();
+            session.setAttribute("history", history);
+        }
 
         List<Comment> comments = commentService.getComments("Mastermind");
         List<Score> topScores = scoreService.getTopScores("Mastermind");
@@ -92,9 +92,9 @@ public class GameController {
         model.addAttribute("isGuest", user.getName().equals("Guest"));
         model.addAttribute("user", user);
 
-//        session.setAttribute("history", history); // Сохраняем историю в сессии
         return "game";
     }
+
 
     @PostMapping("/play")
     public String playGame(@RequestParam("guess0") int guess0,
@@ -124,9 +124,20 @@ public class GameController {
             }
         }
 
-        // Добавляем новый элемент истории
-        String entry = String.format("%d %d %d %d → %s", guess0, guess1, guess2, guess3, feedbackHtml);
-        history.add(entry);
+        // Создаем HTML для цветных кружочков в истории
+        StringBuilder guessHtml = new StringBuilder();
+        for (int g : guess) {
+            String color = getColorForNumber(g); // Добавьте этот метод в класс
+            guessHtml.append("<span class='history-circle' style='background-color: ").append(color).append("'></span>");
+        }
+        
+        String entry = guessHtml + " → " + feedbackHtml;
+        history.add(0, entry); // Добавляем новую запись в начало списка
+        
+        // Ограничиваем историю до 5 записей
+        if (history.size() > 5) {
+            history = history.subList(0, 5);
+        }
 
         List<Comment> comments = commentService.getComments("Mastermind");
         model.addAttribute("comments", comments);
@@ -135,14 +146,15 @@ public class GameController {
         if (topScores == null) {
             topScores = new ArrayList<>();
         }
-        model.addAttribute("topScores", topScores);
 
-        // Передаём историю и состояние игры в модель
+        int averageRating = ratingService.getAverageRating("Mastermind");
+        model.addAttribute("averageRating", averageRating);
+
+        model.addAttribute("topScores", topScores);
         model.addAttribute("history", history);
         model.addAttribute("guessed", game.isGuessed());
         model.addAttribute("attempts", game.getAttempts());
         model.addAttribute("isGuest", user.getName().equals("Guest")); // Проверка, является ли пользователь гостем
-
         session.setAttribute("history", history);
 
 
@@ -196,7 +208,7 @@ public class GameController {
             Rating gameRating = new Rating(user.getName(), rating, new Date(), "Mastermind");
             ratingService.setRating(gameRating);
         }
-        return "redirect:/mastermind";
+        return "redirect:/mastermind#rating";
     }
 
     @GetMapping("/logout")
@@ -207,5 +219,21 @@ public class GameController {
 
     private void initGame(User user) {
         this.game = new Game(codeGenerator.generateSecretCode(), user, null);
+    }
+
+    private String getColorForNumber(int number) {
+        return switch (number) {
+            case 0 -> "#DC2626"; // Красный
+            case 1 -> "#2563EB"; // Синий
+            case 2 -> "#059669"; // Зеленый
+            case 3 -> "#FBBF24"; // Желтый
+            case 4 -> "#7C3AED"; // Фиолетовый
+            case 5 -> "#DB2777"; // Розовый
+            case 6 -> "#FF7F50"; // оранжевый
+            case 7 -> "#B45309"; // Коричневый
+            case 8 -> "#00FF00"; // лаймовый
+            case 9 -> "#111827"; // Почти черный
+            default -> "#000000";
+        };
     }
 }
