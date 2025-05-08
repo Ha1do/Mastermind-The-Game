@@ -13,7 +13,7 @@
     <!-- Кнопка выхода в правом верхнем углу экрана -->
     <div th:if="${!isGuest}" class="fixed top-4 right-4 z-50">
         <a href="/mastermind/logout" class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-full text-sm flex items-center shadow-lg">
-            <span class="mr-1">🚪</span> Выйти
+            <span class="mr-1">🚪</span> Log Out
         </a>
     </div>
 
@@ -21,7 +21,7 @@
     <div class="video-background">
         <video autoplay loop muted playsinline>
             <source src="/static/materials/mylivewallpapers.com-Neon-Sunset.mp4" type="video/mp4">
-            Ваш браузер не поддерживает видео.
+            Browser does not support the video tag.
         </video>
     </div>
 
@@ -65,7 +65,7 @@
 
                     <!-- Палитра цветов -->
                     <div class="color-palette p-4 bg-gray-100 rounded-lg mb-4">
-                        <h3 class="text-center mb-2 font-bold">Доступные цвета</h3>
+                        <h3 class="text-center mb-2 font-bold">Colors</h3>
                         <div class="grid grid-cols-5 gap-4">
                             <div class="color-circle" draggable="true" data-color="0" style="background-color: #DC2626"></div>
                             <div class="color-circle" draggable="true" data-color="1" style="background-color: #2563EB"></div>
@@ -91,7 +91,7 @@
                     </div>
 
                     <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-6 rounded mt-4 w-full">
-                        Проверить
+                        Check
                     </button>
                 </form>
             </div>
@@ -100,29 +100,29 @@
             <!-- Кнопка "Играть снова" после победы -->
             <div th:if="${guessed}" class="flex flex-col items-center space-y-4">
                 <div class="text-center text-green-600 font-bold">
-                    🎉 Вы угадали код за [[${attempts}]] попыток!
+                    🎉 Congrats, you guessed for [[${attempts}]] attempts!
                 </div>
                 <form th:action="@{/mastermind}" method="get">
                     <button type="submit" class="bg-green-500 hover:bg-green-600 text-white py-2 px-6 rounded">
-                        Играть снова?
+                        Play again?
                     </button>
                 </form>
             </div>
 
             <div class="mt-4">
-                <h2 class="font-semibold">История ходов:</h2>
+                <h2 class="font-semibold">History:</h2>
                 <div class="history-container">
                     <div th:each="entry : ${history}" class="history-item" th:utext="${entry}"></div>
                 </div>
             </div>
 
             <div class="mt-4 text-center text-green-600 font-bold" th:if="${guessed}">
-                🎉 Вы угадали код за [[${attempts}]] попыток!
+                🎉 Congrats, you guessed for [[${attempts}]] attempts!
             </div>
 
             <!-- Средний рейтинг -->
             <div class="mt-6 text-center">
-                <h3 class="text-lg font-semibold">⭐ Средняя оценка</h3>
+                <h3 class="text-lg font-semibold">⭐ AVG reting</h3>
                 <div class="text-2xl font-bold text-yellow-500">
                     [[${averageRating}]]/5
                 </div>
@@ -134,7 +134,7 @@
     <div th:if="${!isGuest}" class="rating-container bg-white p-6 rounded shadow-lg">
         <form th:action="@{/mastermind/rate}" method="post" class="flex flex-col items-center space-y-2">
             <div class="text-center">
-                <h3 class="font-semibold mb-2">Оцените игру</h3>
+                <h3 class="font-semibold mb-2">Rate the game</h3>
                 <div class="star-rating">
                     <input type="radio" id="star5" name="rating" value="5" class="hidden">
                     <label for="star5" class="star"></label>
@@ -153,7 +153,7 @@
                 </div>
             </div>
             <button type="submit" class="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded w-full">
-                Оценить
+                Rate
             </button>
         </form>
     </div>
@@ -161,7 +161,7 @@
 
     <!-- ... комментарии  -->
     <div th:if="${isGuest}" class="comments-container comments-guest">
-        <h2 class="text-lg font-bold mb-2">💬 Комментарии</h2>
+        <h2 class="text-lg font-bold mb-2">💬 Comments</h2>
         <div class="comments-box">
             <ul id="comments-list">
                 <li th:each="comment : ${comments}" class="comment-item">
@@ -174,11 +174,11 @@
     </div>
 
     <div th:if="${isGuest}" class="register-container">
-        <a href="/auth" class="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-4 rounded register-button">Зарегистрироваться</a>
+        <a href="/auth" class="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-4 rounded register-button">Log In</a>
     </div>
 
     <div th:if="${!isGuest}" class="comments-container comments-registered">
-        <h2 class="text-lg font-bold mb-2">💬 Комментарии</h2>
+        <h2 class="text-lg font-bold mb-2">💬 Comments</h2>
         <div class="comments-box">
             <ul id="comments-list">
                 <li th:each="comment : ${comments}" class="comment-item">
@@ -191,8 +191,8 @@
 
         <div class="comment-input">
             <form th:action="@{/mastermind/comment}" method="post" class="mt-2">
-                <input type="text" name="comment" placeholder="Ваш комментарий..." class="border rounded px-2 py-1 w-full" required>
-                <button type="submit" class="bg-green-500 hover:bg-green-600 text-white py-1 px-4 rounded send-button">Отправить</button>
+                <input type="text" name="comment" placeholder="Your comment..." class="border rounded px-2 py-1 w-full" required>
+                <button type="submit" class="bg-green-500 hover:bg-green-600 text-white py-1 px-4 rounded send-button">Send</button>
             </form>
         </div>
     </div>
