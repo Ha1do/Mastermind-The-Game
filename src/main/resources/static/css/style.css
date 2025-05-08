@@ -66,6 +66,19 @@
     font-size: 14px;
     padding: 5px;
     border-bottom: 1px solid #ddd;
+    display: flex; /* Используем flexbox */
+    flex-wrap: wrap; /* Разрешаем перенос на следующую строку */ /*todo съехала дата и немного пошёл по пизде текст.*/
+                                                                    /* todo сука, скрол остался */
+}
+.comment-item span:first-child {
+    font-weight: bold; /* Имя пользователя выделяем жирным */
+    margin-right: 10px; /* Расстояние между именем и комментарием */
+}
+
+.comment-item span:last-child {
+    white-space: pre-wrap; /* Сохраняем пробелы и переносим длинный текст */
+    word-wrap: break-word; /* Разбиваем длинные слова */
+    word-break: break-word; /* Разбиваем слова, если они не помещаются */
 }
 
 .register-button, .send-button {

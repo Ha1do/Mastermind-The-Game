@@ -54,6 +54,12 @@ public class GameController {
         List<Comment> comments = commentService.getComments("Mastermind");
         model.addAttribute("comments", comments);
 
+        List<Score> topScores = scoreService.getTopScores("Mastermind");
+        if (topScores == null) {
+            topScores = new ArrayList<>();
+        }
+        model.addAttribute("topScores", topScores);
+
         model.addAttribute("history", history);
         model.addAttribute("guessed", game.isGuessed());
         model.addAttribute("attempts", game.getAttempts());
@@ -96,6 +102,12 @@ public class GameController {
 
         List<Comment> comments = commentService.getComments("Mastermind");
         model.addAttribute("comments", comments);
+
+        List<Score> topScores = scoreService.getTopScores("Mastermind");
+        if (topScores == null) {
+            topScores = new ArrayList<>();
+        }
+        model.addAttribute("topScores", topScores);
 
         // Передаём историю и состояние игры в модель
         model.addAttribute("history", history);
