@@ -106,3 +106,67 @@
 .comments-guest {
     bottom: 80px;
 }
+
+.leaderboard {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.player {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.name {
+    margin-left: 5px;
+    flex: 1;
+}
+
+.score {
+    margin-left: auto;
+    font-weight: bold;
+}
+
+.separator {
+    border: none;
+    border-top: 1px solid #ddd;
+    width: 80%;
+    margin: 4px 0;
+}
+
+/*.leaderboard div {*/
+/*    margin: 5px 0;*/
+/*}*/
+
+/*.leaderboard .text-center {*/
+/*    text-align: center;*/
+/*    margin: 0 10px;*/
+/*}*/
+
+/*.leaderboard .text-2xl {*/
+/*    font-size: 2rem;*/
+/*    color: gold;*/
+/*}*/
+
+/*.leaderboard .text-xl {*/
+/*    font-size: 1.5rem;*/
+/*}*/
+
+/*.leaderboard .font-bold {*/
+/*    font-weight: bold;*/
+/*}*/
+
+/*.leaderboard .first {*/
+/*    color: gold;*/
+/*}*/
+
+/*.leaderboard .second {*/
+/*    color: silver;*/
+/*}*/
+
+/*.leaderboard .third {*/
+/*    color: #cd7f32; !* Бронза *!*/
+/*}*/
+

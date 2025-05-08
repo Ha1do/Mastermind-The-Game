@@ -23,7 +23,7 @@ public class GameController {
     private static final int CODE_LENGTH = 4;
     private final CodeGenerator codeGenerator;
     private Game game;
-    private final List<String> history;
+    private List<String> history;
 
     @Autowired
     private ScoreService scoreService;
@@ -39,16 +39,31 @@ public class GameController {
     @GetMapping
     public String showGamePage(HttpSession session, Model model) {
         User user = (User) session.getAttribute("loggedUser");
+        User previousUser = (User) session.getAttribute("previousUser");
 
-        // Если пользователь не авторизован, создаём гостевого пользователя
         if (user == null) {
             user = new User("Guest", "guest@example.com", "");
             session.setAttribute("loggedUser", user); // Устанавливаем гостя в сессию
         }
 
-        // Если игра ещё не инициализирована, создаём игру для пользователя
+        // Если пользователь изменился, сбрасываем историю
+        if (previousUser != null && !previousUser.getName().equals(user.getName())) {
+            history = new ArrayList<>();  // Создаем новый пустой список
+        }
+        session.setAttribute("previousUser", user);
+
+        game = (Game) session.getAttribute("game");
         if (game == null) {
-            initGame(user);
+            game = new Game(codeGenerator.generateSecretCode(), user, null);
+            session.setAttribute("game", game);
+        }
+
+        // Получаем историю из сессии
+        @SuppressWarnings("unchecked")
+        List<String> sessionHistory = (List<String>) session.getAttribute("history");
+        if (sessionHistory != null) {
+            history.clear();
+            history.addAll(sessionHistory);
         }
 
         List<Comment> comments = commentService.getComments("Mastermind");
@@ -65,6 +80,8 @@ public class GameController {
         model.addAttribute("attempts", game.getAttempts());
         model.addAttribute("isGuest", user.getName().equals("Guest"));
         model.addAttribute("user", user);
+
+        session.setAttribute("history", history); // Сохраняем историю в сессии
         return "game";
     }
 
@@ -115,6 +132,9 @@ public class GameController {
         model.addAttribute("attempts", game.getAttempts());
         model.addAttribute("isGuest", user.getName().equals("Guest")); // Проверка, является ли пользователь гостем
 
+        session.setAttribute("history", history);
+
+
         if (game.isGuessed()) {
             model.addAttribute("score", user.getScore());
 
@@ -126,6 +146,10 @@ public class GameController {
 
             // Обнуляем игру
             game = null;
+
+            session.removeAttribute("game");
+            session.removeAttribute("history");
+
         }
 
         return "game";
