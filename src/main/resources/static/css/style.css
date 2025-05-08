@@ -124,7 +124,7 @@
     width: 100%;
 }
 
-
+/* leaderboard */
 .leaderboard {
     display: flex;
     flex-direction: column;
@@ -154,66 +154,26 @@
     margin: 4px 0;
 }
 
-/* Удалите все остальные стили лидерборда, если они есть */
+/* rating */
+.rating-container {
+    position: fixed;
+    bottom: 290px; /* Располагаем над блоком комментариев */
+    right: 20px;
+    width: 300px;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.9);
+}
 
-/*.leaderboard-container {*/
-/*    position: fixed;*/
-/*    left: 20px;*/
-/*    top: 20px;*/
-/*    width: 300px;*/
-/*    background: rgba(255, 255, 255, 0.9);*/
-/*    border-radius: 10px;*/
-/*    padding: 10px;*/
-/*    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);*/
-/*    z-index: 2;*/
-/*}*/
+.peer:checked + label {
+    color: #EAB308; /* yellow-500 */
+}
 
-/*!* Стили для формы лидеров *!*/
-/*.leaderboard {*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    gap: 8px;*/
-/*}*/
+label[for^="star"] {
+    color: #D1D5DB; /* gray-300 */
+    transition: color 0.2s;
+}
 
-/*.player {*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*    padding: 8px;*/
-/*    background: rgba(255, 255, 255, 0.7);*/
-/*    border-radius: 6px;*/
-/*    transition: all 0.3s ease;*/
-/*}*/
-
-/*.player:hover {*/
-/*    background: rgba(255, 255, 255, 0.9);*/
-/*    transform: translateX(5px);*/
-/*}*/
-
-/*.first-place .icon {*/
-/*    color: gold;*/
-/*}*/
-
-/*.second-place .icon {*/
-/*    color: silver;*/
-/*}*/
-
-/*.third-place .icon {*/
-/*    color: #cd7f32;*/
-/*}*/
-
-/*.name {*/
-/*    margin-left: 5px;*/
-/*    flex: 1;*/
-/*}*/
-
-/*.score {*/
-/*    margin-left: auto;*/
-/*    font-weight: bold;*/
-/*}*/
-
-/*.separator {*/
-/*    border: none;*/
-/*    border-top: 1px solid rgba(0, 0, 0, 0.1);*/
-/*    width: 90%;*/
-/*    margin: 2px 0;*/
-/*}*/
+label[for^="star"]:hover,
+label[for^="star"]:hover ~ label {
+    color: #EAB308; /* yellow-500 */
+}

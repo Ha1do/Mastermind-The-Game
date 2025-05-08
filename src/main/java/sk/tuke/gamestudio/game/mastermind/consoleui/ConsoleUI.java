@@ -181,10 +181,10 @@ public class ConsoleUI
             System.out.println("Enter your comment: ");
             String com = scanner.nextLine();
 
-            System.out.println("Enter your rating from 1 to 10: ");
+            System.out.println("Enter your rating from 1 to 5: ");
             String inputRat = scanner.nextLine();
-            while (!inputRat.matches("[1-9]|10")) {
-                System.out.println("Wrong input. Please enter a number from 1 to 10: ");
+            while (!inputRat.matches("[1-5]")) {
+                System.out.println("Wrong input. Please enter a number from 1 to 5: ");
                 inputRat = scanner.nextLine();
             }
             int rat = Integer.parseInt(inputRat);

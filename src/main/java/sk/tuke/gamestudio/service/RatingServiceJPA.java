@@ -12,8 +12,8 @@ public class RatingServiceJPA implements RatingService {
 
     @Override
     public void setRating(Rating rating) throws RatingException {
-        if (rating == null || rating.getRating() < 1 || rating.getRating() > 10) {
-            throw new RatingException("Invalid rating value. Rating must be between 1 and 10.");
+        if (rating == null || rating.getRating() < 1 || rating.getRating() > 5) {
+            throw new RatingException("Invalid rating value. Rating must be between 1 and 5.");
         }
         entityManager.createNamedQuery("Rating.resetRatings")
                 .setParameter("game", rating.getGame())

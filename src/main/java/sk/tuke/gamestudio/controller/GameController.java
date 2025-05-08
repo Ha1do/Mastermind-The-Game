@@ -5,12 +5,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import sk.tuke.gamestudio.entity.Comment;
+import sk.tuke.gamestudio.entity.Rating;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.entity.User;
 import sk.tuke.gamestudio.game.mastermind.core.CodeGenerator;
 import sk.tuke.gamestudio.game.mastermind.core.Game;
 import sk.tuke.gamestudio.service.CommentService;
 import sk.tuke.gamestudio.service.ScoreService;
+import sk.tuke.gamestudio.service.RatingService;
 
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -30,6 +32,10 @@ public class GameController {
 
     @Autowired
     private CommentService commentService;
+
+    @Autowired
+    private RatingService ratingService;
+
 
     public GameController() {
         this.codeGenerator = new CodeGenerator(CODE_LENGTH);
@@ -74,6 +80,10 @@ public class GameController {
         if (topScores == null) {
             topScores = new ArrayList<>();
         }
+
+        int averageRating = ratingService.getAverageRating("Mastermind");
+        model.addAttribute("averageRating", averageRating);
+
         model.addAttribute("comments", comments);
         model.addAttribute("topScores", topScores);
         model.addAttribute("history", history);
@@ -178,6 +188,17 @@ public class GameController {
 
         return "redirect:/mastermind";
     }
+
+    @PostMapping("/rate")
+    public String rateGame(@RequestParam int rating, HttpSession session) {
+        User user = (User) session.getAttribute("loggedUser");
+        if (user != null && !user.getName().equals("Guest")) {
+            Rating gameRating = new Rating(user.getName(), rating, new Date(), "Mastermind");
+            ratingService.setRating(gameRating);
+        }
+        return "redirect:/mastermind";
+    }
+
 
     private void initGame(User user) {
         this.game = new Game(codeGenerator.generateSecretCode(), user, null);
