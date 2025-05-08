@@ -106,6 +106,24 @@
 .comments-guest {
     bottom: 80px;
 }
+/* leaderboard */
+
+.leaderboard-container {
+    position: fixed;
+    left: 20px;
+    top: 20px;
+    width: 300px;
+    z-index: 10;
+}
+
+.game-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+}
+
 
 .leaderboard {
     display: flex;
@@ -136,37 +154,66 @@
     margin: 4px 0;
 }
 
-/*.leaderboard div {*/
-/*    margin: 5px 0;*/
+/* Удалите все остальные стили лидерборда, если они есть */
+
+/*.leaderboard-container {*/
+/*    position: fixed;*/
+/*    left: 20px;*/
+/*    top: 20px;*/
+/*    width: 300px;*/
+/*    background: rgba(255, 255, 255, 0.9);*/
+/*    border-radius: 10px;*/
+/*    padding: 10px;*/
+/*    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);*/
+/*    z-index: 2;*/
 /*}*/
 
-/*.leaderboard .text-center {*/
-/*    text-align: center;*/
-/*    margin: 0 10px;*/
+/*!* Стили для формы лидеров *!*/
+/*.leaderboard {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    gap: 8px;*/
 /*}*/
 
-/*.leaderboard .text-2xl {*/
-/*    font-size: 2rem;*/
+/*.player {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    padding: 8px;*/
+/*    background: rgba(255, 255, 255, 0.7);*/
+/*    border-radius: 6px;*/
+/*    transition: all 0.3s ease;*/
+/*}*/
+
+/*.player:hover {*/
+/*    background: rgba(255, 255, 255, 0.9);*/
+/*    transform: translateX(5px);*/
+/*}*/
+
+/*.first-place .icon {*/
 /*    color: gold;*/
 /*}*/
 
-/*.leaderboard .text-xl {*/
-/*    font-size: 1.5rem;*/
-/*}*/
-
-/*.leaderboard .font-bold {*/
-/*    font-weight: bold;*/
-/*}*/
-
-/*.leaderboard .first {*/
-/*    color: gold;*/
-/*}*/
-
-/*.leaderboard .second {*/
+/*.second-place .icon {*/
 /*    color: silver;*/
 /*}*/
 
-/*.leaderboard .third {*/
-/*    color: #cd7f32; !* Бронза *!*/
+/*.third-place .icon {*/
+/*    color: #cd7f32;*/
 /*}*/
 
+/*.name {*/
+/*    margin-left: 5px;*/
+/*    flex: 1;*/
+/*}*/
+
+/*.score {*/
+/*    margin-left: auto;*/
+/*    font-weight: bold;*/
+/*}*/
+
+/*.separator {*/
+/*    border: none;*/
+/*    border-top: 1px solid rgba(0, 0, 0, 0.1);*/
+/*    width: 90%;*/
+/*    margin: 2px 0;*/
+/*}*/

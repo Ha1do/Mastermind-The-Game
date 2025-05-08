@@ -9,44 +9,16 @@
 
 
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
-
-<!-- Фоновое видео -->
-<div class="video-background">
-    <video autoplay loop muted playsinline>
-        <source src="/static/materials/mylivewallpapers.com-Neon-Sunset.mp4" type="video/mp4">
-        Ваш браузер не поддерживает видео.
-    </video>
-</div>
-
-
-
-
-<div class="bg-white p-6 rounded shadow-lg w-full max-w-md relative z-10 flex flex-col items-center">
-    <h1 class="text-2xl font-bold mb-4 text-center">🎯 Mastermind</h1>
-
-    <form th:action="@{/mastermind/play}" method="post" class="flex flex-col space-y-2">
-        <div class="grid grid-cols-4 gap-2">
-            <input type="number" min="0" max="9" name="guess0" class="border rounded px-2 py-1 text-center" required>
-            <input type="number" min="0" max="9" name="guess1" class="border rounded px-2 py-1 text-center" required>
-            <input type="number" min="0" max="9" name="guess2" class="border rounded px-2 py-1 text-center" required>
-            <input type="number" min="0" max="9" name="guess3" class="border rounded px-2 py-1 text-center" required>
-        </div>
-        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 rounded">Проверить</button>
-    </form>
-
-    <div class="mt-4">
-        <h2 class="font-semibold">История ходов:</h2>
-        <ul class="list-disc ml-5 mt-2">
-            <li th:each="entry : ${history}" th:utext="${entry}">Пример: 1 2 3 4 → <span class="feedback-circle green"></span></li>
-        </ul>
+    <!-- Фоновое видео -->
+    <div class="video-background">
+        <video autoplay loop muted playsinline>
+            <source src="/static/materials/mylivewallpapers.com-Neon-Sunset.mp4" type="video/mp4">
+            Ваш браузер не поддерживает видео.
+        </video>
     </div>
 
-    <div class="mt-4 text-center text-green-600 font-bold" th:if="${guessed}">
-        🎉 Вы угадали код за [[${attempts}]] попыток!
-    </div>
-
-    <!-- Блок с лидерами -->
-    <div class="mt-6 bg-gray-100 p-4 rounded shadow-md">
+    <!-- Лидерборд -->
+    <div class="leaderboard-container bg-white p-6 rounded shadow-lg">
         <h2 class="text-lg font-bold mb-4 text-center">🏆 Leader Board</h2>
         <div class="leaderboard flex flex-col items-center space-y-3">
             <div th:if="${topScores.size() > 0}" class="player first-place flex items-center gap-2">
@@ -69,49 +41,70 @@
         </div>
     </div>
 
+    <!-- Основной контейнер игры -->
+    <div class="game-container">
+        <div class="bg-white p-6 rounded shadow-lg w-full max-w-md relative z-10 flex flex-col items-center">
+            <h1 class="text-2xl font-bold mb-4 text-center">🎯 Mastermind</h1>
 
+            <form th:action="@{/mastermind/play}" method="post" class="flex flex-col space-y-2">
+                <div class="grid grid-cols-4 gap-2">
+                    <input type="number" min="0" max="9" name="guess0" class="border rounded px-2 py-1 text-center" required>
+                    <input type="number" min="0" max="9" name="guess1" class="border rounded px-2 py-1 text-center" required>
+                    <input type="number" min="0" max="9" name="guess2" class="border rounded px-2 py-1 text-center" required>
+                    <input type="number" min="0" max="9" name="guess3" class="border rounded px-2 py-1 text-center" required>
+                </div>
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 rounded">Проверить</button>
+            </form>
 
+            <div class="mt-4">
+                <h2 class="font-semibold">История ходов:</h2>
+                <ul class="list-disc ml-5 mt-2">
+                    <li th:each="entry : ${history}" th:utext="${entry}">Пример: 1 2 3 4 → <span class="feedback-circle green"></span></li>
+                </ul>
+            </div>
 
-
-
-
-<div th:if="${isGuest}" class="comments-container comments-guest">
-    <h2 class="text-lg font-bold mb-2">💬 Комментарии</h2>
-    <div class="comments-box">
-        <ul id="comments-list">
-            <li th:each="comment : ${comments}" class="comment-item">
-                <span th:text="${comment.player}"></span>:
-                <span th:text="${comment.comment}"></span>
-                <span class="text-gray-500 text-xs" th:text="${#dates.format(comment.commentedOn, 'dd.MM.yyyy HH:mm')}"></span>
-            </li>
-        </ul>
-    </div>
-</div>
-
-<div th:if="${isGuest}" class="register-container">
-    <a href="/auth" class="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-4 rounded register-button">Зарегистрироваться</a>
-</div>
-
-<div th:if="${!isGuest}" class="comments-container comments-registered">
-    <h2 class="text-lg font-bold mb-2">💬 Комментарии</h2>
-    <div class="comments-box">
-        <ul id="comments-list">
-            <li th:each="comment : ${comments}" class="comment-item">
-                <span th:text="${comment.player}"></span>:
-                <span th:text="${comment.comment}"></span>
-                <span class="text-gray-500 text-xs" th:text="${#dates.format(comment.commentedOn, 'dd.MM.yyyy HH:mm')}"></span>
-            </li>
-        </ul>
+            <div class="mt-4 text-center text-green-600 font-bold" th:if="${guessed}">
+                🎉 Вы угадали код за [[${attempts}]] попыток!
+            </div>
+        </div>
     </div>
 
-    <div class="comment-input">
-        <form th:action="@{/mastermind/comment}" method="post" class="mt-2">
-            <input type="text" name="comment" placeholder="Ваш комментарий..." class="border rounded px-2 py-1 w-full" required>
-            <button type="submit" class="bg-green-500 hover:bg-green-600 text-white py-1 px-4 rounded send-button">Отправить</button>
-        </form>
+        <!-- ... комментарии  -->
+    <div th:if="${isGuest}" class="comments-container comments-guest">
+        <h2 class="text-lg font-bold mb-2">💬 Комментарии</h2>
+        <div class="comments-box">
+            <ul id="comments-list">
+                <li th:each="comment : ${comments}" class="comment-item">
+                    <span th:text="${comment.player}"></span>:
+                    <span th:text="${comment.comment}"></span>
+                    <span class="text-gray-500 text-xs" th:text="${#dates.format(comment.commentedOn, 'dd.MM.yyyy HH:mm')}"></span>
+                </li>
+            </ul>
+        </div>
     </div>
-</div>
 
+    <div th:if="${isGuest}" class="register-container">
+        <a href="/auth" class="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-4 rounded register-button">Зарегистрироваться</a>
+    </div>
 
+    <div th:if="${!isGuest}" class="comments-container comments-registered">
+        <h2 class="text-lg font-bold mb-2">💬 Комментарии</h2>
+        <div class="comments-box">
+            <ul id="comments-list">
+                <li th:each="comment : ${comments}" class="comment-item">
+                    <span th:text="${comment.player}"></span>:
+                    <span th:text="${comment.comment}"></span>
+                    <span class="text-gray-500 text-xs" th:text="${#dates.format(comment.commentedOn, 'dd.MM.yyyy HH:mm')}"></span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="comment-input">
+            <form th:action="@{/mastermind/comment}" method="post" class="mt-2">
+                <input type="text" name="comment" placeholder="Ваш комментарий..." class="border rounded px-2 py-1 w-full" required>
+                <button type="submit" class="bg-green-500 hover:bg-green-600 text-white py-1 px-4 rounded send-button">Отправить</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
