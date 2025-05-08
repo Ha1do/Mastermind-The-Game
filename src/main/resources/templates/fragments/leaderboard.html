@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="leaderboardContent">
+    <h2 class="text-lg font-bold mb-4 text-center">🏆 Leader Board</h2>
+    <div class="leaderboard flex flex-col items-center space-y-3">
+        <div th:if="${topScores.size() > 0}" class="player first-place flex items-center gap-2">
+            <span class="icon text-2xl">👑</span>
+            <span class="name font-bold" th:text="${topScores.get(0).player}"></span>
+            <span class="score" th:text="${topScores.get(0).points} + ' pts'"></span>
+        </div>
+        <hr class="separator">
+        <div th:if="${topScores.size() > 1}" class="player second-place flex items-center gap-2">
+            <span class="icon text-xl">🥈</span>
+            <span class="name font-bold" th:text="${topScores.get(1).player}"></span>
+            <span class="score" th:text="${topScores.get(1).points} + ' pts'"></span>
+        </div>
+        <hr class="separator">
+        <div th:if="${topScores.size() > 2}" class="player third-place flex items-center gap-2">
+            <span class="icon text-xl">🥉</span>
+            <span class="name font-bold" th:text="${topScores.get(2).player}"></span>
+            <span class="score" th:text="${topScores.get(2).points} + ' pts'"></span>
+        </div>
+    </div>
+</div>
+</body>
+</html>

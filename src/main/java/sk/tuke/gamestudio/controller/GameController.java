@@ -57,31 +57,32 @@ public class GameController {
             game = new Game(codeGenerator.generateSecretCode(), user, null);
             session.setAttribute("game", game);
         }
+        history = new ArrayList<>();
+        session.setAttribute("history", history);
 
-        // Получаем историю из сессии
-        @SuppressWarnings("unchecked")
-        List<String> sessionHistory = (List<String>) session.getAttribute("history");
-        if (sessionHistory != null) {
-            history.clear();
-            history.addAll(sessionHistory);
-        }
+
+//        // Получаем историю из сессии
+//        @SuppressWarnings("unchecked")
+//        List<String> sessionHistory = (List<String>) session.getAttribute("history");
+//        if (sessionHistory != null) {
+//            history.clear();
+//            history.addAll(sessionHistory);
+//        }
 
         List<Comment> comments = commentService.getComments("Mastermind");
-        model.addAttribute("comments", comments);
-
         List<Score> topScores = scoreService.getTopScores("Mastermind");
         if (topScores == null) {
             topScores = new ArrayList<>();
         }
+        model.addAttribute("comments", comments);
         model.addAttribute("topScores", topScores);
-
         model.addAttribute("history", history);
-        model.addAttribute("guessed", game.isGuessed());
-        model.addAttribute("attempts", game.getAttempts());
+        model.addAttribute("guessed", false);
+        model.addAttribute("attempts", 0);
         model.addAttribute("isGuest", user.getName().equals("Guest"));
         model.addAttribute("user", user);
 
-        session.setAttribute("history", history); // Сохраняем историю в сессии
+//        session.setAttribute("history", history); // Сохраняем историю в сессии
         return "game";
     }
 
@@ -153,6 +154,16 @@ public class GameController {
         }
 
         return "game";
+    }
+
+    @GetMapping("/leaderboard")
+    public String getLeaderboard(Model model) {
+        List<Score> topScores = scoreService.getTopScores("Mastermind");
+        if (topScores == null) {
+            topScores = new ArrayList<>();
+        }
+        model.addAttribute("topScores", topScores);
+        return "fragments/leaderboard :: leaderboardContent";
     }
 
     @PostMapping("/comment")

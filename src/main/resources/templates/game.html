@@ -46,15 +46,30 @@
         <div class="bg-white p-6 rounded shadow-lg w-full max-w-md relative z-10 flex flex-col items-center">
             <h1 class="text-2xl font-bold mb-4 text-center">🎯 Mastermind</h1>
 
-            <form th:action="@{/mastermind/play}" method="post" class="flex flex-col space-y-2">
-                <div class="grid grid-cols-4 gap-2">
-                    <input type="number" min="0" max="9" name="guess0" class="border rounded px-2 py-1 text-center" required>
-                    <input type="number" min="0" max="9" name="guess1" class="border rounded px-2 py-1 text-center" required>
-                    <input type="number" min="0" max="9" name="guess2" class="border rounded px-2 py-1 text-center" required>
-                    <input type="number" min="0" max="9" name="guess3" class="border rounded px-2 py-1 text-center" required>
+            <!-- Форма для активной игры -->
+            <div th:if="${!guessed}" class="flex flex-col space-y-2">
+                <form th:action="@{/mastermind/play}" method="post" class="flex flex-col space-y-2">
+                    <div class="grid grid-cols-4 gap-2">
+                        <input type="number" min="0" max="9" name="guess0" class="border rounded px-2 py-1 text-center" required>
+                        <input type="number" min="0" max="9" name="guess1" class="border rounded px-2 py-1 text-center" required>
+                        <input type="number" min="0" max="9" name="guess2" class="border rounded px-2 py-1 text-center" required>
+                        <input type="number" min="0" max="9" name="guess3" class="border rounded px-2 py-1 text-center" required>
+                    </div>
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 rounded">Проверить</button>
+                </form>
+            </div>
+
+            <!-- Кнопка "Играть снова" после победы -->
+            <div th:if="${guessed}" class="flex flex-col items-center space-y-4">
+                <div class="text-center text-green-600 font-bold">
+                    🎉 Вы угадали код за [[${attempts}]] попыток!
                 </div>
-                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 rounded">Проверить</button>
-            </form>
+                <form th:action="@{/mastermind}" method="get">
+                    <button type="submit" class="bg-green-500 hover:bg-green-600 text-white py-2 px-6 rounded">
+                        Играть снова?
+                    </button>
+                </form>
+            </div>
 
             <div class="mt-4">
                 <h2 class="font-semibold">История ходов:</h2>
@@ -106,5 +121,20 @@
             </form>
         </div>
     </div>
+
+    <script th:if="${guessed}">
+        // Функция для обновления лидерборда
+        function updateLeaderboard() {
+            fetch('/mastermind/leaderboard')
+                .then(response => response.text())
+                .then(html => {
+                    const leaderboardContainer = document.querySelector('.leaderboard-container');
+                    leaderboardContainer.innerHTML = html;
+                });
+        }
+
+        // Обновляем лидерборд сразу после победы
+        updateLeaderboard();
+    </script>
 </body>
 </html>
