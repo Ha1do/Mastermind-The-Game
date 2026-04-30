@@ -167,7 +167,7 @@
                 <li th:each="comment : ${comments}" class="comment-item">
                     <span th:text="${comment.player}"></span>:
                     <span th:text="${comment.comment}"></span>
-                    <span class="text-gray-500 text-xs" th:text="${#dates.format(comment.commentedOn, 'dd.MM.yyyy HH:mm')}"></span>
+                    <span class="text-gray-500 text-xs" th:text="${#dates.format(comment.commentedOn, '  dd.MM.yyyy HH:mm')}"></span>
                 </li>
             </ul>
         </div>
