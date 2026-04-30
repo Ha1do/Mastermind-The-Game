@@ -77,11 +77,18 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>3.1.4</version> <!-- убедитесь, что версия указана -->
+                <version>3.1.4</version>
                 <configuration>
-                    <!-- Указание главного класса для запуска -->
                     <mainClass>sk.tuke.gamestudio.server.GameStudioServer</mainClass>
+                    <layout>ZIP</layout>  <!-- включает PropertiesLauncher -->
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
